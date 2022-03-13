@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+  db:
+    container_name: vm-db
+    image: postgres:13.4
+    restart: always
+    environment:
+      POSTGRES_DB: vehicle-manager
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: vm-pgadmin
+    image: dpage/pgadmin4:5.7
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@loka.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - 8081:80
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    links:
+      - "db:pgsql-server"
+
+volumes:
+  db-data:
+  pgadmin-data:
