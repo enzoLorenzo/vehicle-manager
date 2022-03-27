@@ -5,36 +5,32 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.loka.vehiclemanager.common.BaseEntity;
 
-import javax.persistence.*;
-import java.util.HashSet;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.util.Objects;
-import java.util.Set;
+
+import static pl.loka.vehiclemanager.user.application.port.UserUseCase.UpdateCommand;
 
 @Getter
 @Setter
+@MappedSuperclass
 @NoArgsConstructor
-public class UserEntity extends BaseEntity {
+public abstract class UserEntity extends BaseEntity {
 
-    private String friendName;
-    private String email;
+    @Column(name = "username")
+    private String username;
+
     private String password;
+    private String friendName;
     private boolean active;
     private boolean blocked;
+    private String role = "ROLE_USER";
 
-    @CollectionTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id")
-    )
-    @Column(name = "role")
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> roles = new HashSet<>();
-
-    public UserEntity(String email, String password, String friendName) {
-        this.email = email;
+    public UserEntity(String username, String password, String friendName) {
+        this.username = username;
         this.password = password;
         this.friendName = friendName;
         this.active = true;
-        this.roles = Set.of("ROLE_USER");
     }
 
     public void changePassword(String oldPassword, String newPassword) {
@@ -42,5 +38,11 @@ public class UserEntity extends BaseEntity {
             throw new PasswordNoMatchException("The password provided is incorrect");
         }
         this.password = newPassword;
+    }
+
+    public void update(UpdateCommand command) {
+        if (command.friendName() != null) {
+            this.friendName = command.friendName();
+        }
     }
 }
