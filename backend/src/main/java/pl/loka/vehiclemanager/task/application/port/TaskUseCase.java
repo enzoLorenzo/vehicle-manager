@@ -12,9 +12,9 @@ public interface TaskUseCase {
 
     List<Task> findTasks();
 
-    List<Task> findTasksByVehicle(Vehicle vehicle);
+    List<Task> findTasksByVehicle(Long vehicleId);
 
-    List<Task> findTasksByWorkshop(Workshop workshop);
+    List<Task> findTasksByWorkshop(Long workshopId);
 
     Task findTaskById(Long id);
 

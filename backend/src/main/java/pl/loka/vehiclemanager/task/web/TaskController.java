@@ -50,10 +50,8 @@ public class TaskController {
         @NotBlank
         private String description;
 
-        @NotBlank
         private LocalDateTime startDate;
 
-        @NotBlank
         private LocalDateTime endDate;
 
         @NotBlank

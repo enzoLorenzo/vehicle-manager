@@ -27,18 +27,18 @@ public class TaskService implements TaskUseCase {
     }
 
     @Override
-    public List<Task> findTasksByVehicle(Vehicle vehicle) {
+    public List<Task> findTasksByVehicle(Long vehicleId) {
         return repository.findAll()
                 .stream()
-                .filter(task -> task.getVehicle().equals(vehicle))
+                .filter(task -> task.getVehicle().getId().equals(vehicleId))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Task> findTasksByWorkshop(Workshop workshop) {
+    public List<Task> findTasksByWorkshop(Long workshopId) {
         return repository.findAll()
                 .stream()
-                .filter(task -> task.getWorkshop().equals(workshop))
+                .filter(task -> task.getWorkshop().getId().equals(workshopId))
                 .collect(Collectors.toList());
     }
 
