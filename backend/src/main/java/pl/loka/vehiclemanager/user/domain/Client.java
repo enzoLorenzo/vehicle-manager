@@ -9,19 +9,21 @@ import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
+@Table(name = "clients")
 public class Client extends UserEntity {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("owner")
     private List<Vehicle> vehicles;
 
-    public Client(String email, String password, String friendName) {
-        super(email, password, friendName);
+    public Client(String username, String password, String friendName) {
+        super(username, password, friendName);
     }
 }
