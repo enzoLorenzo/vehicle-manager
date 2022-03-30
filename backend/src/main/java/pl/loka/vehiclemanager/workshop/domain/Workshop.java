@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.loka.vehiclemanager.common.BaseEntity;
 import pl.loka.vehiclemanager.user.domain.Dealer;
-import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase;
+import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.UpdateWorkshopCommand;
+import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.CreateWorkshopCommand;
 
 import javax.persistence.*;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Workshop extends BaseEntity {
     @JsonIgnoreProperties("workshops")
     private Dealer dealer;
 
-    public Workshop(WorkshopUseCase.CreateWorkshopCommand command, Dealer dealer){
+    public Workshop(CreateWorkshopCommand command, Dealer dealer){
         this.friendName = command.friendName();
         this.address = command.address();
         this.description = command.description();
@@ -43,7 +44,7 @@ public class Workshop extends BaseEntity {
         this.dealer = dealer;
     }
 
-    public void update(WorkshopUseCase.UpdateWorkshopCommand command) {
+    public void update(UpdateWorkshopCommand command) {
         if(command.friendName() != null){
             this.friendName = command.friendName();
         }

@@ -5,7 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.jdbc.Work;
 import pl.loka.vehiclemanager.common.BaseEntity;
+import pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateTaskCommand;
+import pl.loka.vehiclemanager.task.application.port.TaskUseCase.CreateTaskCommand;
+
 import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
@@ -25,7 +29,7 @@ public class Task extends BaseEntity {
     private LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
-    private TaskState taksState;
+    private TaskState taskState;
 
     @ManyToOne
     @JsonIgnoreProperties("tasks")
@@ -35,4 +39,27 @@ public class Task extends BaseEntity {
     @JsonIgnoreProperties("tasks")
     private Workshop workshop;
 
+    public Task(CreateTaskCommand command, Vehicle vehicle, Workshop workshop){
+        this.description = command.description();
+        this.startDate = command.startDate();
+        this.endDate = command.endDate();
+        this.taskState = command.taskState();
+        this.vehicle = vehicle;
+        this.workshop = workshop;
+    }
+
+    public void update(UpdateTaskCommand command){
+        if(command.description() != null){
+            this.description = command.description();
+        }
+        if(command.startDate() != null){
+            this.startDate = command.startDate();
+        }
+        if(command.endDate() != null){
+            this.endDate = command.endDate();
+        }
+        if(command.taskState() != null){
+            this.taskState = command.taskState();
+        }
+    }
 }
