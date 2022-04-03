@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.loka.vehiclemanager.common.Utils;
+import pl.loka.vehiclemanager.pricelist.application.port.PriceListPositionUseCase;
+import pl.loka.vehiclemanager.pricelist.domain.PriceListPosition;
 import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase;
 import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.CreateWorkshopCommand;
 import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.UpdateWorkshopCommand;
@@ -26,6 +28,7 @@ import java.util.List;
 public class WorkshopController {
 
     private WorkshopUseCase workshopService;
+    private PriceListPositionUseCase priceListPositionService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -34,6 +37,10 @@ public class WorkshopController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Workshop getWorkshopById(@PathVariable Long id) { return workshopService.findWorkshopById(id); }
+
+    @GetMapping("/{id}/price_list")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PriceListPosition> getPriceList(@PathVariable Long id) { return priceListPositionService.findPriceListPositionsByWorkshop(id); }
 
     @PostMapping
     public ResponseEntity<?> addWorkshop (@Valid @RequestBody RestWorkshopCommand command){
