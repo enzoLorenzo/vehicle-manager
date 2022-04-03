@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.loka.vehiclemanager.common.Utils;
+import pl.loka.vehiclemanager.repairrating.application.port.RapairRatingUseCase;
+import pl.loka.vehiclemanager.repairrating.domain.RepairRating;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateTaskCommand;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.CreateTaskCommand;
@@ -23,6 +25,7 @@ import java.util.List;
 public class TaskController {
 
     private TaskUseCase taskService;
+    private RapairRatingUseCase repairRatingService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -31,6 +34,10 @@ public class TaskController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Task getTaskById(@PathVariable Long id) { return taskService.findTaskById(id); }
+
+    @GetMapping("/{id}/repair_rating")
+    @ResponseStatus(HttpStatus.OK)
+    public List<RepairRating> getRepairRatingByTaskId(@PathVariable Long id) { return repairRatingService.findRepairRatingByTask(id); }
 
     @PostMapping
     public ResponseEntity<?> addTask (@Valid @RequestBody RestTaskCommand command){
