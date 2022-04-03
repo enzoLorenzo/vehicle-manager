@@ -8,38 +8,36 @@ import org.springframework.stereotype.Service;
 import pl.loka.vehiclemanager.security.application.UserSecurity;
 import pl.loka.vehiclemanager.security.user_details.UserEntityDetails;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
-import pl.loka.vehiclemanager.user.db.ClientJpaRepository;
+import pl.loka.vehiclemanager.user.db.DealerJpaRepository;
 import pl.loka.vehiclemanager.user.domain.Client;
+import pl.loka.vehiclemanager.user.domain.Dealer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Collections;
 
 import static pl.loka.vehiclemanager.security.token.TokenUtils.*;
 
 @Slf4j
-@Service("clientService")
+@Service("dealerService")
 @AllArgsConstructor
-public class ClientService implements UserUseCase {
+public class DealerService implements UserUseCase {
 
-    private final ClientJpaRepository repository;
+    private final DealerJpaRepository repository;
     private final PasswordEncoder encoder;
     private final UserSecurity security;
-
 
     @Override
     public RegisterResponse register(RegisterCommand command) {
         if (repository.findByUsernameIgnoreCase(command.username()).isPresent()) {
-            return RegisterResponse.failure(Collections.singletonList("Client already exist"));
+            return RegisterResponse.failure(Collections.singletonList("Dealer already exist"));
         }
-        Client newClient = new Client(command.username(), encoder.encode(command.password()), command.friendName());
-        return RegisterResponse.success(repository.save(newClient));
+        Dealer newDealer = new Dealer(command.username(), encoder.encode(command.password()), command.friendName());
+        return RegisterResponse.success(repository.save(newDealer));
     }
 
     @Override
-    @Transactional
     public void deregister(Long userId) {
         if (!repository.existsById(userId)) {
             throw new UserNotFoundException("Not found user with id: " + userId);
@@ -48,30 +46,30 @@ public class ClientService implements UserUseCase {
     }
 
     @Override
-    public Client getById(Long id) {
+    public Dealer getById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("Not found client with id: " + id));
+                .orElseThrow(() -> new UserNotFoundException("Not found dealer with id: " + id));
     }
 
     @Override
-    public Client getByUsername(String username) {
+    public Dealer getByUsername(String username) {
         return repository.findByUsernameIgnoreCase(username)
-                .orElseThrow(() -> new UserNotFoundException("Not found client with username: " + username));
+                .orElseThrow(() -> new UserNotFoundException("Not found dealer with username: " + username));
     }
 
     @Override
     public void update(UpdateCommand command) {
-        Client client = getById(command.id());
-        isOwner(client.getUsername());
-        client.update(command);
-        repository.save(client);
+        Dealer dealer = getById(command.id());
+        isOwner(dealer.getUsername());
+        dealer.update(command);
+        repository.save(dealer);
     }
 
     @Override
     public void updatePassword(UpdatePasswordCommand command) {
-        Client client = getByUsername(security.getLoginUsername());
-        client.changePassword(encoder.encode(command.oldPassword()), encoder.encode(command.newPassword()));
-        repository.save(client);
+        Dealer dealer = getByUsername(security.getLoginUsername());
+        dealer.changePassword(encoder.encode(command.oldPassword()), encoder.encode(command.newPassword()));
+        repository.save(dealer);
     }
 
     @Override

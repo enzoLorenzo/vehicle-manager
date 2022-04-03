@@ -50,6 +50,6 @@ public interface UserUseCase {
     record UpdateCommand(Long id, String friendName) {
     }
 
-    record UpdatePasswordCommand(Long userId, String oldPassword, String newPassword) {
+    record UpdatePasswordCommand(String oldPassword, String newPassword) {
     }
 }
