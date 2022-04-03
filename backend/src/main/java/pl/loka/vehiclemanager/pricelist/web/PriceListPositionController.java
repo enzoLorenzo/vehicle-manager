@@ -28,7 +28,7 @@ public class PriceListPositionController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public PriceListPosition getPriceListPositionById(@PathVariable Long id) { return priceListPositionService.findPriceListPositionById(id); }
+    public PriceListPosition getPriceListPositionById(@NotNull @PathVariable Long id) { return priceListPositionService.findPriceListPositionById(id); }
 
 
     @PostMapping
@@ -39,7 +39,7 @@ public class PriceListPositionController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updatePriceListPosition(@PathVariable Long id, @Valid @RequestBody RestPriceListPositionCommand command) {
+    public void updatePriceListPosition(@NotNull @PathVariable Long id, @Valid @RequestBody RestPriceListPositionCommand command) {
         priceListPositionService.updatePriceListPosition(command.toUpdateCommand(id));
     }
 
