@@ -24,10 +24,11 @@ public class RepairRatingService implements RapairRatingUseCase {
     }
 
     @Override
-    public List<RepairRating> findRepairRatingByTask(Long TaskId) {
+    public List<RepairRating> findRepairRatingByTask(Long taskId) {
+//        return repository.findRepairRatingByTask(taskId);
         return repository.findAll()
                 .stream()
-                .filter(repairRating -> repairRating.getTask().getId().equals(TaskId))
+                .filter(repairRating -> repairRating.getTask().getId().equals(taskId))
                 .collect(Collectors.toList());
     }
 
