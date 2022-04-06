@@ -1,4 +1,4 @@
-package pl.loka.vehiclemanager.repairrating.web;
+package pl.loka.vehiclemanager.repair_rating.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,11 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.loka.vehiclemanager.common.Utils;
-import pl.loka.vehiclemanager.repairrating.application.port.RapairRatingUseCase;
-import pl.loka.vehiclemanager.repairrating.domain.Rating;
-import pl.loka.vehiclemanager.repairrating.domain.RepairRating;
-import pl.loka.vehiclemanager.repairrating.application.port.RapairRatingUseCase.UpdateRepairRatingCommand;
-import pl.loka.vehiclemanager.repairrating.application.port.RapairRatingUseCase.CreateRepairRatingCommand;
+import pl.loka.vehiclemanager.repair_rating.application.port.RapairRatingUseCase;
+import pl.loka.vehiclemanager.repair_rating.domain.Rating;
+import pl.loka.vehiclemanager.repair_rating.domain.RepairRating;
+import pl.loka.vehiclemanager.repair_rating.application.port.RapairRatingUseCase.UpdateRepairRatingCommand;
+import pl.loka.vehiclemanager.repair_rating.application.port.RapairRatingUseCase.CreateRepairRatingCommand;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -30,7 +30,7 @@ public class RepairRatingController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public RepairRating getRepairRatingById(@PathVariable Long id) { return repairRatingService.findRepairRatingById(id); }
+    public RepairRating getRepairRatingById(@NotNull @PathVariable Long id) { return repairRatingService.findRepairRatingById(id); }
 
     @PostMapping
     public ResponseEntity<?> addRepairRating (@Valid @RequestBody RestRepairRatingCommand command){
@@ -40,7 +40,7 @@ public class RepairRatingController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void updateRepairRating(@PathVariable Long id, @Valid @RequestBody RestRepairRatingCommand command) {
+    public void updateRepairRating(@NotNull @PathVariable Long id, @Valid @RequestBody RestRepairRatingCommand command) {
         repairRatingService.updateRepairRating(command.toUpdateCommand(id));
     }
 

@@ -1,7 +1,7 @@
-package pl.loka.vehiclemanager.repairrating.application.port;
+package pl.loka.vehiclemanager.repair_rating.application.port;
 
-import pl.loka.vehiclemanager.repairrating.domain.Rating;
-import pl.loka.vehiclemanager.repairrating.domain.RepairRating;
+import pl.loka.vehiclemanager.repair_rating.domain.Rating;
+import pl.loka.vehiclemanager.repair_rating.domain.RepairRating;
 
 import java.util.List;
 

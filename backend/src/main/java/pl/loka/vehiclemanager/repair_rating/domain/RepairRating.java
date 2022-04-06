@@ -1,4 +1,4 @@
-package pl.loka.vehiclemanager.repairrating.domain;
+package pl.loka.vehiclemanager.repair_rating.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.loka.vehiclemanager.common.BaseEntity;
-import pl.loka.vehiclemanager.repairrating.application.port.RapairRatingUseCase.UpdateRepairRatingCommand;
-import pl.loka.vehiclemanager.repairrating.application.port.RapairRatingUseCase.CreateRepairRatingCommand;
+import pl.loka.vehiclemanager.repair_rating.application.port.RapairRatingUseCase.UpdateRepairRatingCommand;
+import pl.loka.vehiclemanager.repair_rating.application.port.RapairRatingUseCase.CreateRepairRatingCommand;
 import pl.loka.vehiclemanager.task.domain.Task;
 
 import javax.persistence.Entity;

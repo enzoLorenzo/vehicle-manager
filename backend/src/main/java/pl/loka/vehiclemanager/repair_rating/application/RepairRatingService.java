@@ -1,10 +1,10 @@
-package pl.loka.vehiclemanager.repairrating.application;
+package pl.loka.vehiclemanager.repair_rating.application;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.loka.vehiclemanager.repairrating.application.port.RapairRatingUseCase;
-import pl.loka.vehiclemanager.repairrating.db.RepairRatingJpaRepository;
-import pl.loka.vehiclemanager.repairrating.domain.RepairRating;
+import pl.loka.vehiclemanager.repair_rating.application.port.RapairRatingUseCase;
+import pl.loka.vehiclemanager.repair_rating.db.RepairRatingJpaRepository;
+import pl.loka.vehiclemanager.repair_rating.domain.RepairRating;
 import pl.loka.vehiclemanager.task.db.TaskJpaRepository;
 import pl.loka.vehiclemanager.task.domain.Task;
 
