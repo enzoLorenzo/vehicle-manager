@@ -25,12 +25,6 @@ public class PriceListPositionController {
 
     private PriceListPositionUseCase priceListPositionService;
 
-
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public PriceListPosition getPriceListPositionById(@NotNull @PathVariable Long id) { return priceListPositionService.findPriceListPositionById(id); }
-
-
     @PostMapping
     public ResponseEntity<?> addPriceListPosition (@Valid @RequestBody RestPriceListPositionCommand command){
         PriceListPosition newPriceListPosition = priceListPositionService.addPriceListPosition(command.toCreateCommand());
@@ -45,7 +39,7 @@ public class PriceListPositionController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletPriceListPosition(@NotNull @PathVariable Long id) {
+    public void deletePriceListPosition(@NotNull @PathVariable Long id) {
         priceListPositionService.deletePriceListPosition(id);
     }
 
