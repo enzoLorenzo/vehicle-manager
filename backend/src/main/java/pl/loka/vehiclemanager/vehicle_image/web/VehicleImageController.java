@@ -24,7 +24,7 @@ public class VehicleImageController {
 
     private VehicleImageUseCase imageService;
 
-    @GetMapping("/{vehicleId}/images")
+    @GetMapping("/{vehicleId}/image")
     @ResponseStatus(HttpStatus.OK)
     public List<VehicleImage> getVehicleImageByVehicleId(@PathVariable Long vehicleId) {
         return imageService.findImagesByVehicleId(vehicleId);
@@ -41,7 +41,7 @@ public class VehicleImageController {
 
     @PostMapping("/{vehicleId}/images")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addVehicle(
+    public void addVehicleImages(
             @PathVariable Long vehicleId,
             @Valid @RequestBody RestVehicleImagesCommand command
     ) {
@@ -50,13 +50,13 @@ public class VehicleImageController {
 
     @DeleteMapping("/image/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVehicleImageById(@PathVariable Long id) {
+    public void deleteById(@PathVariable Long id) {
         imageService.deleteVehicleImageById(id);
     }
 
     @DeleteMapping("/{vehicleId}/images")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVehicleImagesByVehicleId(@PathVariable Long vehicleId) {
+    public void deleteByVehicleId(@PathVariable Long vehicleId) {
         imageService.deleteVehicleImagesByVehicleId(vehicleId);
     }
 
