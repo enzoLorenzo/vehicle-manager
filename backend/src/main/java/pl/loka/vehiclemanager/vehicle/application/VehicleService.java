@@ -1,8 +1,9 @@
 package pl.loka.vehiclemanager.vehicle.application;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import pl.loka.vehiclemanager.user.db.ClientJpaRepository;
+import pl.loka.vehiclemanager.security.application.UserSecurity;
+import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.domain.Client;
 import pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase;
 import pl.loka.vehiclemanager.vehicle.db.VehicleJpaRepository;
@@ -12,15 +13,27 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class VehicleService implements VehicleUseCase {
 
     private final VehicleJpaRepository repository;
-    private final ClientJpaRepository clientRepository;
+    private final UserUseCase clientService;
+    private final UserSecurity userSecurity;
+
+    public VehicleService(
+            VehicleJpaRepository repository,
+            @Qualifier("clientService") UserUseCase clientService,
+            UserSecurity userSecurity
+    ) {
+        this.repository = repository;
+        this.clientService = clientService;
+        this.userSecurity = userSecurity;
+    }
 
     @Override
     public List<Vehicle> findVehicles() {
-        return repository.findAll();
+        String username = userSecurity.getLoginUsername();
+        Client client = (Client) clientService.getByUsername(username);
+        return client.getVehicles();
     }
 
     @Override
@@ -32,7 +45,8 @@ public class VehicleService implements VehicleUseCase {
     @Override
     @Transactional
     public Vehicle addVehicle(CreateVehicleCommand command) {
-        Client owner = clientRepository.findAll().get(0);
+        String username = userSecurity.getLoginUsername();
+        Client owner = (Client) clientService.getByUsername(username);
         Vehicle newVehicle = new Vehicle(command, owner);
         return repository.save(newVehicle);
     }
