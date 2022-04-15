@@ -1,0 +1,36 @@
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: steelblue;
+}
+
+.mat-form-field {
+  width: 100%;
+  min-width: 332px;
+}
+
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  padding: 16px;
+  width: 300px;
+  color: white;
+  background-color: red;
+}
+
+.button {
+  margin-top: 5px;
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    font-size: 18px;
+  }
+}
