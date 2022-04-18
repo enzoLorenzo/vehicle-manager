@@ -1,5 +1,6 @@
 package pl.loka.vehiclemanager.task.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tasks")
+@Table(name = "task")
 public class Task extends BaseEntity {
 
     private String description;
@@ -33,10 +34,12 @@ public class Task extends BaseEntity {
 
     @ManyToOne
     @JsonIgnoreProperties("tasks")
+    @JoinColumn(name="vehicle_id", nullable=false)
     private Vehicle vehicle;
 
     @ManyToOne
     @JsonIgnoreProperties("tasks")
+    @JoinColumn(name="workshop_id", nullable=false)
     private Workshop workshop;
 
     public Task(CreateTaskCommand command, Vehicle vehicle, Workshop workshop){

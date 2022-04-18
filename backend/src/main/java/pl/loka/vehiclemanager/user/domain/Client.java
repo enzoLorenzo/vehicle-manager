@@ -19,8 +19,7 @@ import java.util.List;
 @Table(name = "clients")
 public class Client extends UserEntity {
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("owner")
+    @OneToMany(mappedBy="owner")
     private List<Vehicle> vehicles;
 
     public Client(String username, String password, String friendName) {

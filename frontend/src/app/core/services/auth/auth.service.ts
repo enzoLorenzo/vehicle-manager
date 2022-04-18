@@ -17,6 +17,8 @@ export class AuthService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
 
+  private userType: UserType = UserType.CLIENT;
+
 
   constructor(private http: HttpClient,
               private router: Router) {
@@ -80,6 +82,8 @@ export class AuthService {
   private initLoginData(tokensInfo: TokensInfo): void {
     this.storeTokens(tokensInfo.accessToken, tokensInfo.refreshToken);
     localStorage.setItem(this.USER_ID, tokensInfo.userId);
+    const payloadObject: TokenPayload = JSON.parse(atob(tokensInfo.accessToken.split('.')[1]));
+    this.userType = payloadObject.userType;
   }
 
   private storeTokens(accessToken: string, refreshToken: string) {
@@ -93,4 +97,17 @@ export class AuthService {
     localStorage.removeItem(this.USER_ID);
   }
 
+}
+
+export interface TokenPayload {
+  sub: string;
+  roles: string[];
+  iss: string;
+  userType: UserType;
+  exp: number;
+}
+
+export enum UserType {
+  CLIENT = "CLIENT",
+  DEALER = "DEALER",
 }

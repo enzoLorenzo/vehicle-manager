@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import pl.loka.vehiclemanager.security.user_details.UserEntityDetails;
+import pl.loka.vehiclemanager.user.domain.UserType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,12 +35,13 @@ public class TokenUtils {
         throw new TokenMissingException("Token is missing");
     }
 
-    public static String generateAccessToken(UserEntityDetails user, String requestURL) {
+    public static String generateAccessToken(UserEntityDetails user, String requestURL, UserType userType) {
         return JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 5 * 60 * 1000))
                 .withIssuer(requestURL)
                 .withClaim(ROLES, user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .withClaim(USER_TYPE, userType.getValue())
                 .sign(algorithm);
     }
 
