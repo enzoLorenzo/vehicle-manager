@@ -8,10 +8,6 @@ import {TokensInfo} from "../models/tokensInfo";
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  private isRefreshing = false;
-  private accessTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-
-
   constructor(private authService: AuthService,
               @Inject('BASE_API_URL') private baseUrl: string) {
   }
@@ -32,26 +28,26 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
 
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.accessTokenSubject.next(null);
+    if (!this.authService.isRefreshing) {
+      this.authService.isRefreshing = true;
+      this.authService.accessTokenSubject.next(null);
 
       return this.authService.refreshToken().pipe(
         switchMap((token: TokensInfo) => {
-          this.isRefreshing = false;
-          this.accessTokenSubject.next(token.accessToken);
+          this.authService.isRefreshing = false;
+          this.authService.accessTokenSubject.next(token.accessToken);
           return next.handle(this.getApiReq(request, token)).pipe(
             catchError(() => {
+              this.authService.isRefreshing = false;
               this.authService.logout();
               throw EMPTY;
             })
           );
-        }));
+        }),);
 
     } else {
-      return this.accessTokenSubject.pipe(
+      return this.authService.accessTokenSubject.pipe(
         filter(token => token != null),
-        take(1),
         switchMap(jwt => {
           return next.handle(this.getApiReq(request, jwt));
         }));
@@ -59,7 +55,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   private getApiReq(request: HttpRequest<any>, token: TokensInfo) {
-    const apiReq = request.clone({url: `${this.baseUrl}${request.url}`});
-    return this.authService.addToken(apiReq, token.accessToken);
+    request = this.authService.addToken(request, token.accessToken);
+    return request.clone({url: `${request.url}`});
   }
 }
