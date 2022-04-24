@@ -12,8 +12,8 @@ const routes: Routes = [
     path: 'main',
     component: MainComponent,
     children: [
-      {path: '', redirectTo: 'vehicle', pathMatch: 'full'},
-      {path: 'vehicle', component: VehiclesComponent},
+      {path: '', redirectTo: 'vehicles', pathMatch: 'full'},
+      {path: 'vehicles', component: VehiclesComponent},
     ],
     canActivate:[AuthGuard]
   },

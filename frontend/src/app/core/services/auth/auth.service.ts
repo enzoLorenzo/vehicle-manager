@@ -19,6 +19,9 @@ export class AuthService {
 
   private userType: UserType = UserType.CLIENT;
 
+  public isRefreshing = false;
+  public accessTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
 
   constructor(private http: HttpClient,
               private router: Router) {
@@ -37,10 +40,9 @@ export class AuthService {
   }
 
   logout() {
+    this.http.post<any>(this.getUserTypeUrl() + '/logout', {}).subscribe();
     this.removeTokens();
     this.router.navigate(['/login']);
-    return this.http.post<any>('/logout', {});
-
   }
 
   addToken(request: HttpRequest<any>, token: string): HttpRequest<any> {
@@ -52,7 +54,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<TokensInfo> {
-    return this.http.post<any>('/user/refresh-token', {
+    return this.http.post<any>(this.getUserTypeUrl() + '/refresh-token', {
       'refreshToken': this.getRefreshToken()
     }).pipe(tap((tokens: TokensInfo) => {
         this.storeTokens(tokens.accessToken, tokens.refreshToken);
@@ -63,11 +65,18 @@ export class AuthService {
       }));
   }
 
+  private getUserTypeUrl() {
+    return this.userType === UserType.CLIENT ? "/client" : "/dealer";
+  }
+
   isLoggedIn(): boolean {
     return !!this.getAccessToken();
   }
 
   getAccessToken(): string | null {
+    if (this.isRefreshing) {
+      return localStorage.getItem(this.REFRESH_TOKEN);
+    }
     return localStorage.getItem(this.ACCESS_TOKEN);
   }
 
