@@ -10,6 +10,7 @@ import pl.loka.vehiclemanager.security.user_details.UserEntityDetails;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.db.ClientJpaRepository;
 import pl.loka.vehiclemanager.user.domain.Client;
+import pl.loka.vehiclemanager.user.domain.UserType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -80,7 +81,7 @@ public class ClientService implements UserUseCase {
             String refreshToken = getTokenFromHeader(request);
             String username = getUsernameFromToken(refreshToken);
             UserEntityDetails user = new UserEntityDetails(getByUsername(username));
-            String accessToken = generateAccessToken(user, request.getRequestURL().toString());
+            String accessToken = generateAccessToken(user, request.getRequestURL().toString(), UserType.CLIENT);
             String newRefreshToken = generateRefreshToken(user, request.getRequestURL().toString());
             prepareAuthenticateResponse(response, accessToken, newRefreshToken, user.getUserId());
         } catch (Exception ex) {

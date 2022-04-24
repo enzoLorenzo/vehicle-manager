@@ -11,6 +11,7 @@ import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.db.DealerJpaRepository;
 import pl.loka.vehiclemanager.user.domain.Client;
 import pl.loka.vehiclemanager.user.domain.Dealer;
+import pl.loka.vehiclemanager.user.domain.UserType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,7 +79,7 @@ public class DealerService implements UserUseCase {
             String refreshToken = getTokenFromHeader(request);
             String username = getUsernameFromToken(refreshToken);
             UserEntityDetails user = new UserEntityDetails(getByUsername(username));
-            String accessToken = generateAccessToken(user, request.getRequestURL().toString());
+            String accessToken = generateAccessToken(user, request.getRequestURL().toString(), UserType.DEALER);
             String newRefreshToken = generateRefreshToken(user, request.getRequestURL().toString());
             prepareAuthenticateResponse(response, accessToken, newRefreshToken, user.getUserId());
         } catch (Exception ex) {

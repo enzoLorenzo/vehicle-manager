@@ -1,10 +1,12 @@
 package pl.loka.vehiclemanager.workshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.loka.vehiclemanager.common.BaseEntity;
+import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.user.domain.Dealer;
 import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.UpdateWorkshopCommand;
 import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.CreateWorkshopCommand;
@@ -16,7 +18,7 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "workshops")
+@Table(name = "workshop")
 public class Workshop extends BaseEntity {
 
     private String friendName;
@@ -33,8 +35,12 @@ public class Workshop extends BaseEntity {
     private List<ProvidedService> providedServices;
 
     @ManyToOne
-    @JsonIgnoreProperties("workshops")
+    @JsonIgnore
+    @JoinColumn(name="dealer_id", nullable=false)
     private Dealer dealer;
+
+    @OneToMany(mappedBy = "workshop")
+    private List<Task> tasks;
 
     public Workshop(CreateWorkshopCommand command, Dealer dealer){
         this.friendName = command.friendName();
