@@ -1,0 +1,21 @@
+<mat-card-content>
+  <form [formGroup]="vehicleFG" (ngSubmit)="submit()">
+    <p>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Brand" formControlName="brandFC">
+      </mat-form-field>
+    </p>
+
+    <p>
+      <mat-form-field>
+        <input type="text" matInput placeholder="EngineCapacity" formControlName="engineCapacityFC">
+      </mat-form-field>
+    </p>
+
+
+    <div class="button">
+      <button type="submit" mat-button>Submit</button>
+    </div>
+  </form>
+</mat-card-content>
+

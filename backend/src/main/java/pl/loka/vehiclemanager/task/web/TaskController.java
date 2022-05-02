@@ -65,7 +65,4 @@ public class TaskController {
             return new UpdateTaskCommand(id, description, startDate, endDate, taskState);
         }
     }
-
-
-
 }

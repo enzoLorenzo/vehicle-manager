@@ -1,6 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
 import {VehicleApiService} from "../../services/vehicle-api.service";
 import {Vehicle} from "../../models/vehicle";
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import {DialogDogComponent} from "./dialog-dog/dialog-dog.component";
+
 
 @Component({
   selector: 'app-vehicles',
@@ -11,7 +14,7 @@ export class VehiclesComponent implements OnInit {
 
   vehicles: Vehicle[] = [];
 
-  constructor(private vehicleApiService: VehicleApiService) {
+  constructor(private vehicleApiService: VehicleApiService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -30,4 +33,19 @@ export class VehiclesComponent implements OnInit {
     this.vehicleApiService.delete(id)
       .subscribe(() => this.getVehicles());
   }
+
+  addVehicle(): void {
+    const dialogRef = this.dialog.open(DialogDogComponent, {
+      width: '250px',
+    });
+    //console.log("new");
+
+  }
+
+
 }
+export interface DialogData {
+  animal: string;
+  name: string;
+}
+
