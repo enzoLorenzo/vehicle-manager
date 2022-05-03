@@ -22,7 +22,7 @@ public class Client extends UserEntity {
     @OneToMany(mappedBy="owner")
     private List<Vehicle> vehicles;
 
-    public Client(String username, String password, String friendName) {
-        super(username, password, friendName);
+    public Client(String username, String password, String nickname) {
+        super(username, password, nickname);
     }
 }

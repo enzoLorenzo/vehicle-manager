@@ -35,7 +35,7 @@ public class ClientService implements UserUseCase {
         if (repository.findByUsernameIgnoreCase(command.username()).isPresent()) {
             return RegisterResponse.failure(Collections.singletonList("Client already exist"));
         }
-        Client newClient = new Client(command.username(), encoder.encode(command.password()), command.friendName());
+        Client newClient = new Client(command.username(), encoder.encode(command.password()), command.nickname());
         return RegisterResponse.success(repository.save(newClient));
     }
 

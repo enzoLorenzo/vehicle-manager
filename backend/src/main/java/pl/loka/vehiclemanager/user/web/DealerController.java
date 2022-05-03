@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.IOException;
 
+import static pl.loka.vehiclemanager.user.application.port.UserUseCase.*;
+
 @RestController
 @RequestMapping("/dealer")
 public class DealerController {
@@ -84,19 +86,19 @@ public class DealerController {
         @Size(min = 3, max = 16)
         String password;
         @NotBlank
-        String friendName;
+        String nickname;
 
-        UserUseCase.RegisterCommand toRegisterCommand() {
-            return new UserUseCase.RegisterCommand(username, password, friendName);
+        RegisterCommand toRegisterCommand() {
+            return new RegisterCommand(username, password, nickname);
         }
     }
 
     @Data
     static class RestUpdateCommand {
-        private String friendName;
+        private String nickname;
 
-        UserUseCase.UpdateCommand toCommand(Long id) {
-            return new UserUseCase.UpdateCommand(id, friendName);
+        UpdateCommand toCommand(Long id) {
+            return new UpdateCommand(id, nickname);
         }
     }
 
@@ -105,8 +107,8 @@ public class DealerController {
         private String oldPassword;
         private String newPassword;
 
-        UserUseCase.UpdatePasswordCommand toCommand() {
-            return new UserUseCase.UpdatePasswordCommand(oldPassword, newPassword);
+        UpdatePasswordCommand toCommand() {
+            return new UpdatePasswordCommand(oldPassword, newPassword);
         }
     }
 }
