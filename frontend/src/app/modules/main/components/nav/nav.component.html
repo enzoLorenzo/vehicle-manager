@@ -4,8 +4,16 @@
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
+    <mat-nav-list *ngIf="userType == USER_TYPE.CLIENT">
       <a mat-list-item [routerLink]="'vehicles'">Vehicles</a>
+      <a mat-list-item [routerLink]="'repairs'">Repairs</a>
+      <a mat-list-item [routerLink]="'settings'">Settings</a>
+    </mat-nav-list>
+
+    <mat-nav-list *ngIf="userType == USER_TYPE.DEALER">
+      <a mat-list-item [routerLink]="'workshops'">Workshops</a>
+      <a mat-list-item [routerLink]="'tasks'">Tasks</a>
+      <a mat-list-item [routerLink]="'settings'">Settings</a>
     </mat-nav-list>
   </mat-sidenav>
 

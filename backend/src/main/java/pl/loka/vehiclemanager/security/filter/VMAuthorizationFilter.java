@@ -20,7 +20,14 @@ public class VMAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (request.getServletPath().equals("/login") || request.getServletPath().equals("/client/refresh-token") || request.getServletPath().equals("/client")) {
+        if (request.getServletPath().equals("/login") ||
+                request.getServletPath().equals("/client/refresh-token") ||
+                request.getServletPath().equals("/client/logout") ||
+                request.getServletPath().equals("/dealer/refresh-token") ||
+                request.getServletPath().equals("/dealer/logout") ||
+                request.getServletPath().equals("/client") ||
+                request.getServletPath().equals("/dealer")
+        ) {
             filterChain.doFilter(request, response);
         } else {
             try {

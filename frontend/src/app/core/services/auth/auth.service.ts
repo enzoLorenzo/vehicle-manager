@@ -1,24 +1,44 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {catchError, mapTo, tap} from "rxjs/operators";
+import {catchError, map, tap} from "rxjs/operators";
 import {Router} from "@angular/router";
 import {TokensInfo} from "../../models/tokensInfo";
+
+
+export interface RegisterCommand {
+  username: string;
+  password: string;
+  nickname: string;
+}
+
+
+export interface TokenPayload {
+  sub: string;
+  roles: string[];
+  iss: string;
+  userType: UserType;
+  exp: number;
+}
+
+export enum UserType {
+  CLIENT = "CLIENT",
+  DEALER = "DEALER",
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  public isRefreshing = false;
+  public accessTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private readonly ACCESS_TOKEN = 'ACCESS_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   private readonly USER_ID = 'USER_ID';
-
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
-
   private userType: UserType = UserType.CLIENT;
-
 
   constructor(private http: HttpClient,
               private router: Router) {
@@ -26,21 +46,24 @@ export class AuthService {
     // this._isLoggedIn$.next(!!token);
   }
 
+  register(command: RegisterCommand, userType: UserType): Observable<void> {
+    return this.http.post<void>(this.getUserTypeUrl(userType), command);
+  }
+
   login(username: string, password: string): Observable<boolean> {
     return this.http.post<TokensInfo>('/login', {username, password}).pipe(
       tap((tokensInfo: TokensInfo) => this.initLoginData(tokensInfo)),
-      mapTo(true),
-      catchError(error => {
+      map(() => true),
+      catchError(() => {
         return of(false);
       })
     );
   }
 
   logout() {
+    this.http.post<any>(this.getUserTypeUrl() + '/logout', {}).subscribe();
     this.removeTokens();
     this.router.navigate(['/login']);
-    return this.http.post<any>('/logout', {});
-
   }
 
   addToken(request: HttpRequest<any>, token: string): HttpRequest<any> {
@@ -52,7 +75,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<TokensInfo> {
-    return this.http.post<any>('/user/refresh-token', {
+    return this.http.post<any>(this.getUserTypeUrl() + '/refresh-token', {
       'refreshToken': this.getRefreshToken()
     }).pipe(tap((tokens: TokensInfo) => {
         this.storeTokens(tokens.accessToken, tokens.refreshToken);
@@ -68,11 +91,21 @@ export class AuthService {
   }
 
   getAccessToken(): string | null {
+    if (this.isRefreshing) {
+      return localStorage.getItem(this.REFRESH_TOKEN);
+    }
     return localStorage.getItem(this.ACCESS_TOKEN);
   }
 
-  getUserId(): string {
-    return localStorage.getItem(this.USER_ID)!;
+  getUserType(): UserType {
+    return this.userType;
+  }
+
+  private getUserTypeUrl(userType?: UserType) {
+    if (!!userType) {
+      return userType === UserType.CLIENT ? "/client" : "/dealer"
+    }
+    return this.userType === UserType.CLIENT ? "/client" : "/dealer";
   }
 
   private getRefreshToken(): string | null {
@@ -97,17 +130,4 @@ export class AuthService {
     localStorage.removeItem(this.USER_ID);
   }
 
-}
-
-export interface TokenPayload {
-  sub: string;
-  roles: string[];
-  iss: string;
-  userType: UserType;
-  exp: number;
-}
-
-export enum UserType {
-  CLIENT = "CLIENT",
-  DEALER = "DEALER",
 }

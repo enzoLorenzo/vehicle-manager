@@ -79,19 +79,19 @@ public class ClientController {
         @Size(min = 3, max = 16)
         String password;
         @NotBlank
-        String friendName;
+        String nickname;
 
         RegisterCommand toRegisterCommand() {
-            return new RegisterCommand(username, password, friendName);
+            return new RegisterCommand(username, password, nickname);
         }
     }
 
     @Data
     static class RestUpdateCommand {
-        private String friendName;
+        private String nickname;
 
         UpdateCommand toCommand(Long id) {
-            return new UpdateCommand(id, friendName);
+            return new UpdateCommand(id, nickname);
         }
     }
 }
