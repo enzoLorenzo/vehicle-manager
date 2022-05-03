@@ -1,0 +1,37 @@
+<form [formGroup]="registerFG"
+      (ngSubmit)="register()"
+      fxLayout="column"
+      fxLayoutAlign="space-between stretch"
+>
+  <mat-form-field appearance="fill">
+    <mat-label>Account type</mat-label>
+    <mat-select formControlName="userTypeFC">
+      <mat-option *ngFor="let type of keys(USER_TYPE)" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="Username" formControlName="usernameFC">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="password" matInput placeholder="Password" formControlName="passwordFC">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="Nickname" formControlName="nicknameFC">
+  </mat-form-field>
+
+    <div *ngIf="isError" class="error">
+      {{errorMessage}}
+    </div>
+  <button
+    type="submit"
+    mat-raised-button
+    [disabled]="!registerFG.valid"
+  >
+    Register
+  </button>
+</form>

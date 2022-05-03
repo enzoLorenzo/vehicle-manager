@@ -1,4 +1,4 @@
-import {Component, OnDestroy} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../../core/services/auth/auth.service";
@@ -8,10 +8,9 @@ import {AuthService} from "../../../../core/services/auth/auth.service";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnDestroy {
+export class LoginComponent {
 
   isError = false;
-
   loginFG: FormGroup = new FormGroup({
     usernameFC: new FormControl('', Validators.required),
     passwordFC: new FormControl('', Validators.required),
@@ -21,6 +20,10 @@ export class LoginComponent implements OnDestroy {
               private authService: AuthService) {
   }
 
+  @Input()
+  set username(value: string) {
+    this.loginFG.get('usernameFC')?.setValue(value);
+  }
 
   submit() {
     this.authService.login(
@@ -34,9 +37,5 @@ export class LoginComponent implements OnDestroy {
         this.isError = true;
       }
     });
-
-  }
-
-  ngOnDestroy(): void {
   }
 }

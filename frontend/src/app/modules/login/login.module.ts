@@ -1,15 +1,17 @@
 import {NgModule} from '@angular/core';
 import {LoginPageComponent} from './login-page.component';
 import {LoginComponent} from "./components/login/login.component";
-import {MaterialModule} from "../../core/material.module";
+import {RegisterComponent} from './components/register/register.component';
+import {CoreModule} from "../../core/core.module";
 
 const COMPONENTS = [
   LoginPageComponent,
-  LoginComponent
+  LoginComponent,
+  RegisterComponent
 ]
 
 const MODULES = [
-  MaterialModule
+  CoreModule
 ]
 
 @NgModule({
