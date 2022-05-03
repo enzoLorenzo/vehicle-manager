@@ -8,6 +8,7 @@ export enum VehicleType {
 }
 
 export interface Vehicle{
+  id: number;
   registration: string;
   brand: string;
   model: string;

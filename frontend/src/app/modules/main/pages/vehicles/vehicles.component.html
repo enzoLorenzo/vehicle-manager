@@ -1,1 +1,20 @@
-<p>vehicles works!</p>
+<mat-card>
+  <mat-card-title>
+    Your vehicles
+    <mat-card-actions>
+
+    </mat-card-actions>
+  </mat-card-title>
+  <mat-card-content fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="30px">
+
+
+    <app-vehicle-card
+      *ngFor="let vehicle of vehicles"
+      [vehicle]="vehicle"
+      (delete)="deleteVehicle(vehicle.id)"
+    >
+    </app-vehicle-card>
+
+  </mat-card-content>
+
+</mat-card>

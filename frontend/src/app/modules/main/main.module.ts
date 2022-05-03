@@ -3,6 +3,7 @@ import {MainComponent} from './main.component';
 import {NavComponent} from "./components/nav/nav.component";
 import {VehiclesComponent} from './pages/vehicles/vehicles.component';
 import {CoreModule} from "../../core/core.module";
+import { VehicleCardComponent } from './pages/vehicles/vehicle-card/vehicle-card.component';
 
 const COMPONENTS = [
   MainComponent,
@@ -12,7 +13,7 @@ const COMPONENTS = [
 
 
 @NgModule({
-  declarations: [COMPONENTS],
+  declarations: [COMPONENTS, VehicleCardComponent],
   imports: [CoreModule],
   exports: [COMPONENTS]
 })

@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-title>
+  <h1>{{vehicle.brand}} {{vehicle.model}} {{vehicle.engineCapacity}}</h1>
+  </mat-card-title>
+  <mat-divider inset></mat-divider>
+  <mat-card-content>
+    <div class="photo" fxFlex="30"></div>
+
+    <div class="content" fxLayout="row" fxLayoutAlign="center center" fxFlex="70">
+      <div class="labels">
+        <p>BRAND: </p>
+        <p>MODEL: </p>
+        <p>REGISTRATION: </p>
+        <p>YEAR: </p>
+        <p>TYPE: </p>
+        <p>ENGINE: </p>
+        <p>HP: </p>
+      </div>
+      <div class="info">
+        <p>{{vehicle.brand}}</p>
+        <p>{{vehicle.model}}</p>
+        <p>{{vehicle.registration}}</p>
+        <p>{{vehicle.year}}</p>
+        <p>{{vehicle.type}}</p>
+        <p>{{vehicle.engineCapacity}}</p>
+        <p>{{vehicle.horsePower}}</p>
+      </div>
+    </div>
+
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button>EDIT</button>
+    <button mat-raised-button (click)="deleteVehicle()">DELETE</button>
+  </mat-card-actions>
+</mat-card>
