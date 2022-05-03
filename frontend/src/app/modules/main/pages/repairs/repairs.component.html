@@ -1,0 +1,32 @@
+<mat-card>
+
+  <mat-form-field appearance="fill" *ngFor="let filter of filters">
+    <mat-label>{{ filter.label }}</mat-label>
+    <mat-select
+      [(value)]="filter.defaultValue"
+      (selectionChange)="applyFilter($event, filter)"
+    >
+      <mat-option *ngFor="let op of filter.options" [value]="op">
+        {{ op }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSourceFilters" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="columnConfig.fieldName" *ngFor="let columnConfig of displayedColumns">
+      <th mat-header-cell *matHeaderCellDef>{{ columnConfig.header }}</th>
+      <td mat-cell *matCellDef="let repair">
+        {{ repair[columnConfig.fieldName] }}
+        <div *ngIf="columnConfig.fieldName === 'action'">
+          <button mat-icon-button color="primary" (click)="showDetails(repair.id)"><mat-icon>info</mat-icon></button>
+          <button mat-icon-button color="primary" (click)="deleteRepair(repair.id)"><mat-icon>delete</mat-icon></button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnFieldName"></tr>
+    <tr mat-row *matRowDef="let emprow; columns: columnFieldName"></tr>
+  </table>
+
+</mat-card>
+

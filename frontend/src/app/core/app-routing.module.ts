@@ -4,6 +4,7 @@ import {LoginPageComponent} from "../modules/login/login-page.component";
 import {MainComponent} from "../modules/main/main.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {VehiclesComponent} from "../modules/main/pages/vehicles/vehicles.component";
+import {RepairsComponent} from "../modules/main/pages/repairs/repairs.component";
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'main'},
@@ -14,6 +15,7 @@ const routes: Routes = [
     children: [
       {path: '', redirectTo: 'vehicles', pathMatch: 'full'},
       {path: 'vehicles', component: VehiclesComponent},
+      {path: 'repairs', component: RepairsComponent},
     ],
     canActivate:[AuthGuard]
   },

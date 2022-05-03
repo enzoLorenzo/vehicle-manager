@@ -18,11 +18,11 @@ public interface WorkshopUseCase {
     void deleteWorkshopById(Long id);
 
 
-    record CreateWorkshopCommand(String friendName, String address, String description,
+    record CreateWorkshopCommand(String name, String address, String description,
                                  List<ProvidedService> providedServices){
     }
 
-    record UpdateWorkshopCommand(Long id, String friendName, String address, String description,
+    record UpdateWorkshopCommand(Long id, String name, String address, String description,
                                  List<ProvidedService> providedServices){
     }
 
