@@ -21,15 +21,15 @@ public abstract class UserEntity extends BaseEntity {
     private String username;
 
     private String password;
-    private String friendName;
+    private String nickname;
     private boolean active;
     private boolean blocked;
     private String role = "ROLE_USER";
 
-    public UserEntity(String username, String password, String friendName) {
+    public UserEntity(String username, String password, String nickname) {
         this.username = username;
         this.password = password;
-        this.friendName = friendName;
+        this.nickname = nickname;
         this.active = true;
     }
 
@@ -41,8 +41,8 @@ public abstract class UserEntity extends BaseEntity {
     }
 
     public void update(UpdateCommand command) {
-        if (command.friendName() != null) {
-            this.friendName = command.friendName();
+        if (command.nickname() != null) {
+            this.nickname = command.nickname();
         }
     }
 }

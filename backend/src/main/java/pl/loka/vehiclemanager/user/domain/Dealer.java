@@ -24,7 +24,7 @@ public class Dealer extends UserEntity {
     @OneToMany(mappedBy="dealer")
     private List<Workshop> workshops;
 
-    public Dealer(String username, String password, String friendName) {
-        super(username, password, friendName);
+    public Dealer(String username, String password, String nickname) {
+        super(username, password, nickname);
     }
 }

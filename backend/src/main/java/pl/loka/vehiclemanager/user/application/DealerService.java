@@ -9,7 +9,6 @@ import pl.loka.vehiclemanager.security.application.UserSecurity;
 import pl.loka.vehiclemanager.security.user_details.UserEntityDetails;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.db.DealerJpaRepository;
-import pl.loka.vehiclemanager.user.domain.Client;
 import pl.loka.vehiclemanager.user.domain.Dealer;
 import pl.loka.vehiclemanager.user.domain.UserType;
 
@@ -34,7 +33,7 @@ public class DealerService implements UserUseCase {
         if (repository.findByUsernameIgnoreCase(command.username()).isPresent()) {
             return RegisterResponse.failure(Collections.singletonList("Dealer already exist"));
         }
-        Dealer newDealer = new Dealer(command.username(), encoder.encode(command.password()), command.friendName());
+        Dealer newDealer = new Dealer(command.username(), encoder.encode(command.password()), command.nickname());
         return RegisterResponse.success(repository.save(newDealer));
     }
 

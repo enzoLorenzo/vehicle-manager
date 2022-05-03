@@ -53,9 +53,9 @@ export class RegisterComponent {
 
   private getRegisterCommand() {
     const command: RegisterCommand = {
-      nickname: this.registerFG.get("usernameFC")!.value,
+      username: this.registerFG.get("usernameFC")!.value,
       password: this.registerFG.get("passwordFC")!.value,
-      username: this.registerFG.get("nicknameFC")!.value
+      nickname: this.registerFG.get("nicknameFC")!.value
     }
     return command;
   }
