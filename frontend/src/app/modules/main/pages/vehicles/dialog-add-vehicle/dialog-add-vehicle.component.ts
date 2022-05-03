@@ -4,7 +4,6 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {VehicleApiService} from "../../../services/vehicle-api.service";
 import {VehiclePost, VehicleType} from "../../../models/vehicle";
 
-
 @Component({
   selector: 'app-dialog-dog',
   templateUrl: './dialog-add-vehicle.component.html',
@@ -15,15 +14,22 @@ export class DialogAddVehicleComponent implements OnInit {
   keys = Object.keys;
   VEHICLE_TYPE = VehicleType;
 
+  yearFC = new FormControl('', Validators.compose(
+    [Validators.min(1900), Validators.max(2022), Validators.required]));
+  engineCapacityFC = new FormControl('', Validators.compose(
+    [Validators.min(0), Validators.required]));
+  horsePowerFC = new FormControl('', Validators.compose(
+    [Validators.min(0), Validators.required]));
+
   vehicleFG: FormGroup = new FormGroup({
     brandFC: new FormControl('', Validators.required),
-    engineCapacityFC: new FormControl('', Validators.required),
+    engineCapacityFC: this.engineCapacityFC,
     generationFC: new FormControl('', Validators.required),
-    horsePowerFC: new FormControl('', Validators.required),
+    horsePowerFC: this.horsePowerFC,
     modelFC: new FormControl('', Validators.required),
     registrationFC: new FormControl('', Validators.required),
     typeFC: new FormControl(undefined, Validators.required),
-    yearFC: new FormControl('', Validators.required)
+    yearFC: this.yearFC
   });
 
   constructor(

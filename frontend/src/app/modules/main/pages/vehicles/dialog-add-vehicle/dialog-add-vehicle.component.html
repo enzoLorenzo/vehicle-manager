@@ -1,6 +1,8 @@
 <mat-card-content>
   <form [formGroup]="vehicleFG" (ngSubmit)="submit()">
 
+    {{vehicleFG.valid}}
+
     <mat-form-field>
       <input type="text" matInput placeholder="Brand" formControlName="brandFC">
     </mat-form-field>
@@ -17,18 +19,30 @@
 
 
     <mat-form-field>
-      <input type="text" matInput placeholder="Year" formControlName="yearFC">
+      <input type="text" matInput placeholder="Generation" formControlName="generationFC">
     </mat-form-field>
 
 
     <mat-form-field>
-      <input type="text" matInput placeholder="Horse Power" formControlName="horsePowerFC">
+      <input type="number" matInput placeholder="Year" [formControl]="yearFC" formControlName="yearFC" required>
+      <mat-error *ngIf="yearFC.errors?.['min']"> Year cannot be lower than 1900.</mat-error>
+      <mat-error *ngIf="yearFC.errors?.['max']"> Year cannot be higher than 2022.</mat-error>
     </mat-form-field>
 
 
     <mat-form-field>
-      <input type="text" matInput placeholder="Engine Capacity" formControlName="engineCapacityFC">
+      <input type="number" matInput placeholder="Horse Power" [formControl]="horsePowerFC"
+             formControlName="horsePowerFC">
+      <mat-error *ngIf="horsePowerFC.errors?.['min']"> Horse Power cannot be negative</mat-error>
     </mat-form-field>
+
+
+    <mat-form-field>
+      <input type="number" matInput placeholder="Engine Capacity" [formControl]="engineCapacityFC"
+             formControlName="engineCapacityFC">
+      <mat-error *ngIf="engineCapacityFC.errors?.['min']"> Engine Capacity cannot be negative</mat-error>
+    </mat-form-field>
+
 
     <mat-form-field>
       <mat-select formControlName="typeFC" matInput placeholder="Vehicle Type">
@@ -38,8 +52,9 @@
       </mat-select>
     </mat-form-field>
 
+
     <div class="button">
-      <button type="submit" mat-button>Submit</button>
+      <button type="submit" mat-button [disabled]="!vehicleFG.valid">Submit</button>
     </div>
   </form>
 </mat-card-content>
