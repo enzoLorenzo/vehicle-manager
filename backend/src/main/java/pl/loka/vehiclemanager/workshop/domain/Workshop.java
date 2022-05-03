@@ -1,7 +1,6 @@
 package pl.loka.vehiclemanager.workshop.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,7 @@ import java.util.List;
 @Table(name = "workshop")
 public class Workshop extends BaseEntity {
 
-    private String friendName;
+    private String name;
     private String address;
     private String description;
 
@@ -43,7 +42,7 @@ public class Workshop extends BaseEntity {
     private List<Task> tasks;
 
     public Workshop(CreateWorkshopCommand command, Dealer dealer){
-        this.friendName = command.friendName();
+        this.name = command.name();
         this.address = command.address();
         this.description = command.description();
         this.providedServices = command.providedServices();
@@ -51,8 +50,8 @@ public class Workshop extends BaseEntity {
     }
 
     public void update(UpdateWorkshopCommand command) {
-        if(command.friendName() != null){
-            this.friendName = command.friendName();
+        if(command.name() != null){
+            this.name = command.name();
         }
         if(command.address() != null){
             this.address = command.address();

@@ -1,16 +1,13 @@
 package pl.loka.vehiclemanager.task.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.jdbc.Work;
 import pl.loka.vehiclemanager.common.BaseEntity;
-import pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateTaskCommand;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.CreateTaskCommand;
-
+import pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateTaskCommand;
 import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
@@ -30,39 +27,43 @@ public class Task extends BaseEntity {
     private LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
-    private TaskState taskState;
+    private TaskStatus taskStatus;
 
     @ManyToOne
     @JsonIgnoreProperties("tasks")
-    @JoinColumn(name="vehicle_id", nullable=false)
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
     @ManyToOne
     @JsonIgnoreProperties("tasks")
-    @JoinColumn(name="workshop_id", nullable=false)
+    @JoinColumn(name = "workshop_id", nullable = false)
     private Workshop workshop;
 
-    public Task(CreateTaskCommand command, Vehicle vehicle, Workshop workshop){
+    public Task(CreateTaskCommand command, Vehicle vehicle, Workshop workshop) {
         this.description = command.description();
         this.startDate = command.startDate();
         this.endDate = command.endDate();
-        this.taskState = command.taskState();
+        this.taskStatus = command.taskStatus();
         this.vehicle = vehicle;
         this.workshop = workshop;
     }
 
-    public void update(UpdateTaskCommand command){
-        if(command.description() != null){
+    public void update(UpdateTaskCommand command) {
+        if (command.description() != null) {
             this.description = command.description();
         }
-        if(command.startDate() != null){
+        if (command.startDate() != null) {
             this.startDate = command.startDate();
         }
-        if(command.endDate() != null){
+        if (command.endDate() != null) {
             this.endDate = command.endDate();
         }
-        if(command.taskState() != null){
-            this.taskState = command.taskState();
+        if (command.taskStatus() != null) {
+            this.taskStatus = command.taskStatus();
         }
+    }
+
+    public void updateStatus(TaskStatus status) {
+        this.taskStatus.updateStatus(status);
     }
 }

@@ -1,3 +1,5 @@
+import {Repair} from "./task";
+
 export enum VehicleType {
   CAR = "CAR",
   VAN = "VAN",
@@ -17,6 +19,7 @@ export interface Vehicle{
   engineCapacity: string;
   horsePower: string;
   type: VehicleType;
+  task: Repair[]
 }
 
 export interface VehiclePost{
