@@ -4,7 +4,7 @@ import {NavComponent} from "./components/nav/nav.component";
 import { VehiclesComponent} from './pages/vehicles/vehicles.component';
 import {CoreModule} from "../../core/core.module";
 import { VehicleCardComponent } from './pages/vehicles/vehicle-card/vehicle-card.component';
-import { DialogDogComponent } from './pages/vehicles/dialog-dog/dialog-dog.component';
+import { DialogAddVehicleComponent } from './pages/vehicles/dialog-add-vehicle/dialog-add-vehicle.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 const COMPONENTS = [
@@ -15,7 +15,7 @@ const COMPONENTS = [
 
 
 @NgModule({
-  declarations: [COMPONENTS, VehicleCardComponent, DialogDogComponent],
+  declarations: [COMPONENTS, VehicleCardComponent, DialogAddVehicleComponent],
   imports: [CoreModule, ReactiveFormsModule],
   exports: [COMPONENTS]
 })

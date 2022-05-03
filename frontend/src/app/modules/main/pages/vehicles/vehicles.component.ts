@@ -1,8 +1,8 @@
-import {Component, OnInit, Inject} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {VehicleApiService} from "../../services/vehicle-api.service";
 import {Vehicle} from "../../models/vehicle";
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import {DialogDogComponent} from "./dialog-dog/dialog-dog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogAddVehicleComponent} from "./dialog-add-vehicle/dialog-add-vehicle.component";
 
 
 @Component({
@@ -34,18 +34,14 @@ export class VehiclesComponent implements OnInit {
       .subscribe(() => this.getVehicles());
   }
 
-  addVehicle(): void {
-    const dialogRef = this.dialog.open(DialogDogComponent, {
+  addVehicleDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddVehicleComponent, {
       width: '250px',
-    });
-    //console.log("new");
-
+    })
+      .afterClosed()
+      .subscribe(() => this.getVehicles());
   }
 
 
-}
-export interface DialogData {
-  animal: string;
-  name: string;
 }
 
