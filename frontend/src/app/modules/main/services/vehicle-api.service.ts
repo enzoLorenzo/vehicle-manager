@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {Vehicle} from "../models/vehicle";
+import {Observable, of} from "rxjs";
+import {Vehicle, VehiclePost} from "../models/vehicle";
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +15,11 @@ export class VehicleApiService {
   }
 
   delete(id: number) {
-    return this.http.delete(`/vehicle/${id}`)
+    return this.http.delete(`/vehicle/${id}`);
+  }
+
+
+  addClientVehicle(vehicle: VehiclePost): Observable<Vehicle> {
+    return this.http.post<Vehicle>('/vehicle', vehicle);
   }
 }
