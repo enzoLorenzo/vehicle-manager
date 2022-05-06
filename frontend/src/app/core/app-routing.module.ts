@@ -5,6 +5,7 @@ import {MainComponent} from "../modules/main/main.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {VehiclesComponent} from "../modules/main/pages/vehicles/vehicles.component";
 import {RepairsComponent} from "../modules/main/pages/repairs/repairs.component";
+import {WorkshopsComponent} from "../modules/main/pages/workshops/workshops.component";
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'main'},
@@ -16,6 +17,8 @@ const routes: Routes = [
       {path: '', redirectTo: 'vehicles', pathMatch: 'full'},
       {path: 'vehicles', component: VehiclesComponent},
       {path: 'repairs', component: RepairsComponent},
+
+      {path: 'workshops', component: WorkshopsComponent}
     ],
     canActivate:[AuthGuard]
   },
