@@ -10,6 +10,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.loka.vehiclemanager.security.token.TokenUtils;
 import pl.loka.vehiclemanager.security.user_details.UserEntityDetails;
+import pl.loka.vehiclemanager.user.domain.Client;
+import pl.loka.vehiclemanager.user.domain.UserType;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -34,8 +36,12 @@ public class VMAuthenticationFilter extends UsernamePasswordAuthenticationFilter
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException {
         UserEntityDetails user = (UserEntityDetails) authentication.getPrincipal();
-
-        String accessToken = TokenUtils.generateAccessToken(user, request.getRequestURL().toString());
+        String accessToken = "";
+        if(user.getEntity() instanceof Client){
+            accessToken = TokenUtils.generateAccessToken(user, request.getRequestURL().toString(), UserType.CLIENT);
+        }else {
+            accessToken = TokenUtils.generateAccessToken(user, request.getRequestURL().toString(), UserType.DEALER);
+        }
         String refreshToken = TokenUtils.generateRefreshToken(user, request.getRequestURL().toString());
 
         TokenUtils.prepareAuthenticateResponse(response, accessToken, refreshToken, user.getUserId());

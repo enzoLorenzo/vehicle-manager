@@ -10,6 +10,7 @@ import pl.loka.vehiclemanager.security.user_details.UserEntityDetails;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.db.ClientJpaRepository;
 import pl.loka.vehiclemanager.user.domain.Client;
+import pl.loka.vehiclemanager.user.domain.UserType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +21,7 @@ import java.util.Collections;
 import static pl.loka.vehiclemanager.security.token.TokenUtils.*;
 
 @Slf4j
-@Service
+@Service("clientService")
 @AllArgsConstructor
 public class ClientService implements UserUseCase {
 
@@ -32,9 +33,9 @@ public class ClientService implements UserUseCase {
     @Override
     public RegisterResponse register(RegisterCommand command) {
         if (repository.findByUsernameIgnoreCase(command.username()).isPresent()) {
-            return RegisterResponse.failure(Collections.singletonList("Client already exists"));
+            return RegisterResponse.failure(Collections.singletonList("Client already exist"));
         }
-        Client newClient = new Client(command.username(), encoder.encode(command.password()), command.friendName());
+        Client newClient = new Client(command.username(), encoder.encode(command.password()), command.nickname());
         return RegisterResponse.success(repository.save(newClient));
     }
 
@@ -69,8 +70,7 @@ public class ClientService implements UserUseCase {
 
     @Override
     public void updatePassword(UpdatePasswordCommand command) {
-        Client client = getById(command.userId());
-        isOwner(client.getUsername());
+        Client client = getByUsername(security.getLoginUsername());
         client.changePassword(encoder.encode(command.oldPassword()), encoder.encode(command.newPassword()));
         repository.save(client);
     }
@@ -81,7 +81,7 @@ public class ClientService implements UserUseCase {
             String refreshToken = getTokenFromHeader(request);
             String username = getUsernameFromToken(refreshToken);
             UserEntityDetails user = new UserEntityDetails(getByUsername(username));
-            String accessToken = generateAccessToken(user, request.getRequestURL().toString());
+            String accessToken = generateAccessToken(user, request.getRequestURL().toString(), UserType.CLIENT);
             String newRefreshToken = generateRefreshToken(user, request.getRequestURL().toString());
             prepareAuthenticateResponse(response, accessToken, newRefreshToken, user.getUserId());
         } catch (Exception ex) {

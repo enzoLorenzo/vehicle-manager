@@ -2,8 +2,6 @@ package pl.loka.vehiclemanager.workshop.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +14,6 @@ import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.UpdateWo
 import pl.loka.vehiclemanager.workshop.domain.ProvidedService;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
-import javax.persistence.Entity;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -58,7 +55,7 @@ public class WorkshopController {
     static class RestWorkshopCommand {
 
         @NotBlank
-        private String friendName;
+        private String name;
 
         @NotBlank
         private String address;
@@ -70,11 +67,11 @@ public class WorkshopController {
         private List<ProvidedService> providedServices;
 
         CreateWorkshopCommand toCreateCommand() {
-            return new CreateWorkshopCommand(friendName, address, description, providedServices);
+            return new CreateWorkshopCommand(name, address, description, providedServices);
         }
 
         UpdateWorkshopCommand toUpdateCommand(Long id) {
-            return new UpdateWorkshopCommand(id, friendName, address, description, providedServices);
+            return new UpdateWorkshopCommand(id, name, address, description, providedServices);
         }
     }
 }

@@ -1,0 +1,26 @@
+<form [formGroup]="loginFG"
+      (ngSubmit)="submit()"
+      fxLayout="column"
+      fxLayoutAlign="space-between stretch"
+>
+  <mat-form-field>
+    <input type="text" matInput placeholder="Username" formControlName="usernameFC">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="password" matInput placeholder="Password" formControlName="passwordFC">
+  </mat-form-field>
+
+  <div *ngIf="isError" class="error">
+    Wrong username or password
+  </div>
+
+  <button type="submit"
+          mat-raised-button
+          [disabled]="!loginFG.valid"
+  >
+    Login
+  </button>
+</form>
+
+

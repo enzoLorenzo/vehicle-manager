@@ -1,14 +1,18 @@
 package pl.loka.vehiclemanager.vehicle.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.loka.vehiclemanager.common.BaseEntity;
+import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.user.domain.Client;
 
 import javax.persistence.*;
+
+import java.util.List;
 
 import static pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase.CreateVehicleCommand;
 import static pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase.UpdateVehicleCommand;
@@ -18,7 +22,7 @@ import static pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase.Upd
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "vehicles")
+@Table(name = "vehicle")
 public class Vehicle extends BaseEntity {
 
     private String registration;
@@ -33,8 +37,12 @@ public class Vehicle extends BaseEntity {
     private VehicleType type;
 
     @ManyToOne
-    @JsonIgnoreProperties("vehicles")
+    @JsonIgnore
+    @JoinColumn(name="owner_id", nullable=false)
     private Client owner;
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<Task> tasks;
 
 
     public Vehicle(CreateVehicleCommand command, Client owner) {

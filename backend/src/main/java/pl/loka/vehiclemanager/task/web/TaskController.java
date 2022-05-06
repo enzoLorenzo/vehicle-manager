@@ -10,12 +10,14 @@ import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateTaskCommand;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.CreateTaskCommand;
 import pl.loka.vehiclemanager.task.domain.Task;
-import pl.loka.vehiclemanager.task.domain.TaskState;
+import pl.loka.vehiclemanager.task.domain.TaskStatus;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static pl.loka.vehiclemanager.task.application.port.TaskUseCase.*;
 
 @RestController
 @RequestMapping("/task")
@@ -44,6 +46,18 @@ public class TaskController {
         taskService.updateTask(command.toUpdateCommand(id));
     }
 
+    @PutMapping("/{id}/status")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateTaskStatus(@PathVariable Long id, @RequestBody TaskStatus status) {
+        taskService.updateTaskStatus(new UpdateStatusCommand(id, status));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteTask(@PathVariable Long id) {
+        taskService.deleteTask(id);
+    }
+
     @Data
     static class RestTaskCommand{
 
@@ -55,17 +69,17 @@ public class TaskController {
         private LocalDateTime endDate;
 
         @NotBlank
-        private TaskState taskState;
+        private TaskStatus taskStatus;
+
+        private Long vehicleId;
+        private Long workshopId;
 
         CreateTaskCommand toCreateCommand() {
-            return new CreateTaskCommand(description, startDate, endDate, taskState);
+            return new CreateTaskCommand(description, startDate, endDate, taskStatus, vehicleId, workshopId);
         }
 
         UpdateTaskCommand toUpdateCommand(Long id) {
-            return new UpdateTaskCommand(id, description, startDate, endDate, taskState);
+            return new UpdateTaskCommand(id, description, startDate, endDate, taskStatus, vehicleId, workshopId);
         }
     }
-
-
-
 }

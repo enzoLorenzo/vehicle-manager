@@ -16,9 +16,12 @@ public class UserSecurity {
     private final AuthenticationFacade authenticationFacade;
 
     public boolean isOwner(String ownerName) {
-        return authenticationFacade.getAuthentication()
-                .getName()
+        return getLoginUsername()
                 .equalsIgnoreCase(ownerName);
+    }
+
+    public String getLoginUsername() {
+        return authenticationFacade.getAuthentication().getName();
     }
 
     public void logout(HttpServletRequest request, HttpServletResponse response) {

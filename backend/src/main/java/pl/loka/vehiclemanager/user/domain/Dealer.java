@@ -1,5 +1,6 @@
 package pl.loka.vehiclemanager.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,14 +17,14 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "dealers")
+@Table(name = "dealer")
 public class Dealer extends UserEntity {
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("dealer")
+    @JsonIgnore
+    @OneToMany(mappedBy="dealer")
     private List<Workshop> workshops;
 
-    public Dealer(String username, String password, String friendName) {
-        super(username, password, friendName);
+    public Dealer(String username, String password, String nickname) {
+        super(username, password, nickname);
     }
 }

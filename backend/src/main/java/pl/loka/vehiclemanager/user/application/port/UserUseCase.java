@@ -44,12 +44,12 @@ public interface UserUseCase {
         }
     }
 
-    record RegisterCommand(String username, String password, String friendName) {
+    record RegisterCommand(String username, String password, String nickname) {
     }
 
-    record UpdateCommand(Long id, String friendName) {
+    record UpdateCommand(Long id, String nickname) {
     }
 
-    record UpdatePasswordCommand(Long userId, String oldPassword, String newPassword) {
+    record UpdatePasswordCommand(String oldPassword, String newPassword) {
     }
 }
