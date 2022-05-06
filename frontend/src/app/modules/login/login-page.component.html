@@ -1,0 +1,19 @@
+<div class="body">
+  <mat-card>
+
+    <mat-tab-group mat-align-tabs="center" dynamicHeight #tabs>
+      <mat-tab label="LOGIN">
+        <app-login
+        [username]="username"
+        ></app-login>
+      </mat-tab>
+      <mat-tab label="REGISTER">
+        <app-register
+        (registerSuccess)="initLogin($event)"
+        ></app-register>
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-card>
+</div>
+

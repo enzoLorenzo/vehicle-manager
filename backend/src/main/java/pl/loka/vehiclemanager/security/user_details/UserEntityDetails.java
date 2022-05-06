@@ -52,5 +52,9 @@ public class UserEntityDetails implements UserDetails {
     public boolean isEnabled() {
         return entity.isActive();
     }
+
+    public UserEntity getEntity() {
+        return entity;
+    }
 }
 
