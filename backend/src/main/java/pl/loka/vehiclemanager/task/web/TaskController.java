@@ -6,20 +6,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.loka.vehiclemanager.common.Utils;
-import pl.loka.vehiclemanager.repair_rating.application.port.RapairRatingUseCase;
-import pl.loka.vehiclemanager.repair_rating.domain.RepairRating;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
-import pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateTaskCommand;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.CreateTaskCommand;
+import pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateTaskCommand;
 import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.task.domain.TaskStatus;
+import pl.loka.vehiclemanager.task_rating.application.port.TaskRatingUseCase;
+import pl.loka.vehiclemanager.task_rating.domain.TaskRating;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static pl.loka.vehiclemanager.task.application.port.TaskUseCase.*;
+import static pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateStatusCommand;
 
 @RestController
 @RequestMapping("/task")
@@ -27,22 +27,28 @@ import static pl.loka.vehiclemanager.task.application.port.TaskUseCase.*;
 public class TaskController {
 
     private TaskUseCase taskService;
-    private RapairRatingUseCase repairRatingService;
+    private TaskRatingUseCase repairRatingService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Task> getTasks() { return taskService.findTasks(); }
+    public List<Task> getTasks() {
+        return taskService.findTasks();
+    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Task getTaskById(@PathVariable Long id) { return taskService.findTaskById(id); }
+    public Task getTaskById(@PathVariable Long id) {
+        return taskService.findTaskById(id);
+    }
 
-    @GetMapping("/{id}/repair_rating")
+    @GetMapping("/{id}/rating")
     @ResponseStatus(HttpStatus.OK)
-    public List<RepairRating> getRepairRatingByTaskId(@PathVariable Long id) { return repairRatingService.findRepairRatingByTask(id); }
+    public TaskRating getRepairRatingByTaskId(@PathVariable Long id) {
+        return repairRatingService.findTaskRatingByTaskId(id);
+    }
 
     @PostMapping
-    public ResponseEntity<?> addTask (@Valid @RequestBody RestTaskCommand command){
+    public ResponseEntity<?> addTask(@Valid @RequestBody RestTaskCommand command) {
         Task newTask = taskService.addTask(command.toCreateCommand());
         return ResponseEntity.created(Utils.createUri(newTask)).build();
     }
@@ -66,7 +72,7 @@ public class TaskController {
     }
 
     @Data
-    static class RestTaskCommand{
+    static class RestTaskCommand {
 
         @NotBlank
         private String description;
