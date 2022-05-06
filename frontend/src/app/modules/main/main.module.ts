@@ -8,6 +8,7 @@ import {DialogAddVehicleComponent} from './pages/vehicles/dialog-add-vehicle/dia
 import {ReactiveFormsModule} from '@angular/forms';
 import {RepairsComponent} from "./pages/repairs/repairs.component";
 import { DialogEditVehicleComponent } from './pages/vehicles/dialog-edit-vehicle/dialog-edit-vehicle.component';
+import { WorkshopsComponent } from './pages/workshops/workshops.component';
 
 const COMPONENTS = [
   MainComponent,
@@ -15,12 +16,14 @@ const COMPONENTS = [
   VehiclesComponent,
   VehicleCardComponent,
   RepairsComponent,
-  DialogAddVehicleComponent
+  DialogAddVehicleComponent,
+  DialogEditVehicleComponent,
+  WorkshopsComponent
 ]
 
 
 @NgModule({
-  declarations: [COMPONENTS, DialogEditVehicleComponent],
+  declarations: [COMPONENTS],
   imports: [CoreModule, ReactiveFormsModule],
   exports: [COMPONENTS]
 })
