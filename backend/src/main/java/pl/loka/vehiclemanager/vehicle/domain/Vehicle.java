@@ -41,7 +41,9 @@ public class Vehicle extends BaseEntity {
     @JoinColumn(name="owner_id", nullable=false)
     private Client owner;
 
-    @OneToMany(mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Task> tasks;
 
 

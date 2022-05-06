@@ -58,7 +58,7 @@ public class WorkshopController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteVehicleById(@PathVariable Long id) {
+    public void deleteWorkshopById(@PathVariable Long id) {
         workshopService.deleteWorkshopById(id);
     }
 

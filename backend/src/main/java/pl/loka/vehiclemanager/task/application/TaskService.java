@@ -9,10 +9,7 @@ import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.domain.Client;
 import pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase;
-import pl.loka.vehiclemanager.vehicle.db.VehicleJpaRepository;
 import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
-import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase;
-import pl.loka.vehiclemanager.workshop.db.WorkshopJpaRepository;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import java.util.Collection;
@@ -23,21 +20,15 @@ import java.util.stream.Collectors;
 public class TaskService implements TaskUseCase {
 
     private final TaskJpaRepository repository;
-    private final WorkshopUseCase workshopService;
-    private final VehicleUseCase vehicleService;
     private final UserSecurity userSecurity;
     private final UserUseCase clientService;
 
     public TaskService(
             TaskJpaRepository repository,
-            WorkshopUseCase workshopService,
-            VehicleUseCase vehicleService,
             UserSecurity userSecurity,
             @Qualifier("clientService") UserUseCase clientService
     ) {
         this.repository = repository;
-        this.workshopService = workshopService;
-        this.vehicleService = vehicleService;
         this.userSecurity = userSecurity;
         this.clientService = clientService;
     }
@@ -75,9 +66,7 @@ public class TaskService implements TaskUseCase {
     }
 
     @Override
-    public Task addTask(CreateTaskCommand command) {
-        Workshop workshop = workshopService.findWorkshopById(command.workshopId());
-        Vehicle vehicle = vehicleService.findVehicleById(command.vehicleId());
+    public Task addTask(Workshop workshop, Vehicle vehicle, CreateTaskCommand command) {
         Task newTask = new Task(command, vehicle, workshop);
         return repository.save(newTask);
     }
