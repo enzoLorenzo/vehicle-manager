@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-title>
+    <h1>{{workshop.name}} {{workshop.address}}</h1>
+  </mat-card-title>
+  <mat-divider inset></mat-divider>
+  <mat-card-content>
+
+
+    <div class="content" fxLayout="row" fxLayoutAlign="center center" fxFlex="70">
+      <div class="labels">
+        <p>NAME: </p>
+        <p>ADDRESS: </p>
+        <p>DESCRIPTION: </p>
+
+      </div>
+      <div class="info">
+        <p>{{workshop.name}}</p>
+        <p>{{workshop.address}}</p>
+        <p>{{workshop.description}}</p>
+
+
+      </div>
+    </div>
+
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button >EDIT</button>
+    <button mat-raised-button (click)="deleteWorkshop()">DELETE</button>
+  </mat-card-actions>
+</mat-card>

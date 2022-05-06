@@ -1,1 +1,20 @@
-<p>workshops works!</p>
+<mat-card>
+  <mat-card-title>
+    Your workshops
+    <mat-card-actions>
+      <button mat-raised-button>NEW WORKSHOP</button>
+    </mat-card-actions>
+  </mat-card-title>
+  <mat-card-content fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="30px">
+
+
+    <app-workshop-card
+      *ngFor="let workshop of workshops"
+      [workshop]="workshop"
+      (delete)="deleteWorkshop(workshop.id)"
+    >
+    </app-workshop-card>
+
+  </mat-card-content>
+
+</mat-card>

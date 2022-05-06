@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RepairsComponent} from "./pages/repairs/repairs.component";
 import { DialogEditVehicleComponent } from './pages/vehicles/dialog-edit-vehicle/dialog-edit-vehicle.component';
 import { WorkshopsComponent } from './pages/workshops/workshops.component';
+import { WorkshopCardComponent } from './pages/workshops/workshop-card/workshop-card.component';
 
 const COMPONENTS = [
   MainComponent,
@@ -23,7 +24,7 @@ const COMPONENTS = [
 
 
 @NgModule({
-  declarations: [COMPONENTS],
+  declarations: [COMPONENTS, WorkshopCardComponent],
   imports: [CoreModule, ReactiveFormsModule],
   exports: [COMPONENTS]
 })
