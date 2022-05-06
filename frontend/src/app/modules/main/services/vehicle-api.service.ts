@@ -14,6 +14,10 @@ export class VehicleApiService {
     return this.http.get<Vehicle[]>('/vehicle');
   }
 
+  getClientSingleVehicle(id: number): Observable<Vehicle> {
+    return this.http.get<Vehicle>(`/vehicle/${id}`);
+  }
+
   delete(id: number) {
     return this.http.delete(`/vehicle/${id}`);
   }
@@ -21,5 +25,9 @@ export class VehicleApiService {
 
   addClientVehicle(vehicle: VehiclePost): Observable<Vehicle> {
     return this.http.post<Vehicle>('/vehicle', vehicle);
+  }
+
+  editClientVehicle(vehicle: Vehicle ): Observable<Vehicle> {
+    return this.http.put<Vehicle>(`/vehicle/${vehicle.id}`, vehicle )
   }
 }
