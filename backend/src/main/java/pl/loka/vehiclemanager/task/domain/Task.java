@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.loka.vehiclemanager.common.BaseEntity;
+import pl.loka.vehiclemanager.task_rating.domain.TaskRating;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.CreateTaskCommand;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateTaskCommand;
 import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
@@ -28,6 +29,10 @@ public class Task extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private TaskStatus taskStatus;
+
+
+    @OneToOne(mappedBy = "task")
+    private TaskRating rating;
 
     @ManyToOne
     @JsonIgnoreProperties("tasks")
