@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PriceListPositionUseCase {
 
-    List<PriceListPosition> findPriceListPositionsByWorkshop(Long workshopId);
+    List<PriceListPosition> findPriceListPositionsByWorkshopId(Long workshopId);
 
     PriceListPosition findPriceListPositionById(Long id);
 
@@ -16,11 +16,11 @@ public interface PriceListPositionUseCase {
 
     void deletePriceListPosition(Long id);
 
-    record CreatePriceListPositionCommand(String name, String description, Double price){
+    record CreatePriceListPositionCommand(String name, String description, Double price, Long workshopId) {
 
     }
 
-    record UpdatePriceListPositionCommand(Long id, String name, String description, Double price){
+    record UpdatePriceListPositionCommand(Long id, String name, String description, Double price, Long workshopId) {
 
     }
 

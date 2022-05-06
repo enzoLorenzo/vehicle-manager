@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import pl.loka.vehiclemanager.pricelist.application.port.PriceListPositionUseCase;
 import pl.loka.vehiclemanager.pricelist.db.PriceListPositionJpaRepository;
 import pl.loka.vehiclemanager.pricelist.domain.PriceListPosition;
+import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase;
 import pl.loka.vehiclemanager.workshop.db.WorkshopJpaRepository;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,15 +17,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PriceListPositionService implements PriceListPositionUseCase {
     private final PriceListPositionJpaRepository repository;
-    private final WorkshopJpaRepository workshopRepository;
+    private final WorkshopUseCase workshopService;
 
 
     @Override
-    public List<PriceListPosition> findPriceListPositionsByWorkshop(Long workshopId) {
-        return repository.findAll()
-                .stream()
-                .filter(priceListPosition -> priceListPosition.getWorkshop().getId().equals(workshopId))
-                .collect(Collectors.toList());
+    public List<PriceListPosition> findPriceListPositionsByWorkshopId(Long workshopId) {
+        return repository.findPriceListPositionByWorkshop_Id(workshopId);
     }
 
     @Override
@@ -33,13 +32,15 @@ public class PriceListPositionService implements PriceListPositionUseCase {
     }
 
     @Override
+    @Transactional
     public PriceListPosition addPriceListPosition(CreatePriceListPositionCommand command) {
-        Workshop workshop = workshopRepository.findAll().get(0);
+        Workshop workshop = workshopService.findWorkshopById(command.workshopId());
         PriceListPosition newPosition = new PriceListPosition(command,workshop);
         return repository.save(newPosition);
     }
 
     @Override
+    @Transactional
     public void updatePriceListPosition(UpdatePriceListPositionCommand command) {
         PriceListPosition priceListPosition = findPriceListPositionById(command.id());
         priceListPosition.update(command);
@@ -47,6 +48,7 @@ public class PriceListPositionService implements PriceListPositionUseCase {
     }
 
     @Override
+    @Transactional
     public void deletePriceListPosition(Long id) {
         PriceListPosition priceListPosition = findPriceListPositionById(id);
         repository.delete(priceListPosition);

@@ -1,5 +1,6 @@
 package pl.loka.vehiclemanager.pricelist.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import pl.loka.vehiclemanager.pricelist.application.port.PriceListPositionUseCas
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -26,7 +28,8 @@ public class PriceListPosition extends BaseEntity {
     private Double price;
 
     @ManyToOne
-    @JsonIgnoreProperties("price_list")
+    @JsonIgnore
+    @JoinColumn(name = "workshop_id", nullable = false)
     private Workshop workshop;
 
     public PriceListPosition(CreatePriceListPositionCommand command, Workshop workshop){

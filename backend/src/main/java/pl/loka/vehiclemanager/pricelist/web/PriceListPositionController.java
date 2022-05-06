@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/price_list")
+@RequestMapping("/workshop/price-list")
 @AllArgsConstructor
 public class PriceListPositionController {
 
@@ -56,12 +56,15 @@ public class PriceListPositionController {
         @NotBlank
         private Double price;
 
+        @NotNull
+        private Long workshopId;
+
         PriceListPositionUseCase.CreatePriceListPositionCommand toCreateCommand() {
-            return new CreatePriceListPositionCommand(name,descritpion,price);
+            return new CreatePriceListPositionCommand(name,descritpion,price, workshopId);
         }
 
         PriceListPositionUseCase.UpdatePriceListPositionCommand toUpdateCommand(Long id) {
-            return new UpdatePriceListPositionCommand(id, name, descritpion, price);
+            return new UpdatePriceListPositionCommand(id, name, descritpion, price, workshopId);
         }
     }
 }

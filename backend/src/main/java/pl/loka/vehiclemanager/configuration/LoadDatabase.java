@@ -12,7 +12,6 @@ import pl.loka.vehiclemanager.vehicle.db.VehicleJpaRepository;
 import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
 import pl.loka.vehiclemanager.vehicle.domain.VehicleType;
 import pl.loka.vehiclemanager.workshop.db.WorkshopJpaRepository;
-import pl.loka.vehiclemanager.workshop.domain.ProvidedService;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import java.time.LocalDateTime;
@@ -58,7 +57,7 @@ public class LoadDatabase {
         dealerService.register(new UserUseCase.RegisterCommand("dealer", "dealer", "Szymon Lorenzo"));
         Dealer dealer = (Dealer) dealerService.getByUsername("dealer");
 
-        Workshop workshop = addWorkshop(dealer, "LorenzoCars", "ul.Długa 34", "Zakład blacharski", Collections.emptyList());
+        Workshop workshop = addWorkshop(dealer, "LorenzoCars", "ul.Długa 34", "Zakład blacharski");
 
         taskService.addTask(new TaskUseCase.CreateTaskCommand(
                 "opis",
@@ -84,8 +83,8 @@ public class LoadDatabase {
         return vehicle;
     }
 
-    private Workshop addWorkshop(Dealer dealer, String name, String address, String description, List<ProvidedService> providedServices) {
-        CreateWorkshopCommand createWorkshopCommand = new CreateWorkshopCommand(name, address, description, providedServices);
+    private Workshop addWorkshop(Dealer dealer, String name, String address, String description) {
+        CreateWorkshopCommand createWorkshopCommand = new CreateWorkshopCommand(name, address, description);
         Workshop workshop = new Workshop(createWorkshopCommand, dealer);
         workshopJpaRepository.save(workshop);
         return workshop;
