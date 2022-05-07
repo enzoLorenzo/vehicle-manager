@@ -21,12 +21,15 @@ const COMPONENTS = [
   RepairsComponent,
   DialogAddVehicleComponent,
   DialogEditVehicleComponent,
-  WorkshopsComponent
+  WorkshopsComponent,
+  WorkshopCardComponent,
+  DialogAddWorkshopComponent,
+  DialogEditWorkshopComponent
 ]
 
 
 @NgModule({
-  declarations: [COMPONENTS, WorkshopCardComponent, DialogAddWorkshopComponent, DialogEditWorkshopComponent],
+  declarations: [COMPONENTS],
   imports: [CoreModule, ReactiveFormsModule],
   exports: [COMPONENTS]
 })
