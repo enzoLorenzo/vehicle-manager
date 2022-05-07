@@ -3,10 +3,9 @@ package pl.loka.vehiclemanager.workshop.application;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.loka.vehiclemanager.security.application.UserSecurity;
+import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
-import pl.loka.vehiclemanager.user.db.DealerJpaRepository;
 import pl.loka.vehiclemanager.user.domain.Dealer;
-import pl.loka.vehiclemanager.user.domain.UserEntity;
 import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase;
 import pl.loka.vehiclemanager.workshop.db.WorkshopJpaRepository;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
@@ -24,8 +23,7 @@ public class WorkshopService implements WorkshopUseCase {
     public WorkshopService(
             WorkshopJpaRepository repository,
             @Qualifier("dealerService") UserUseCase dealerService,
-            UserSecurity userSecurity
-    ) {
+            UserSecurity userSecurity) {
         this.repository = repository;
         this.dealerService = dealerService;
         this.userSecurity = userSecurity;

@@ -1,5 +1,7 @@
 package pl.loka.vehiclemanager.workshop.application.port;
 
+import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
+import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import java.util.List;

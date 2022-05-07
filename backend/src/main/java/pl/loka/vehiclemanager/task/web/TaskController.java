@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.loka.vehiclemanager.common.Utils;
+import pl.loka.vehiclemanager.task.application.NewTaskService;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.CreateTaskCommand;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateTaskCommand;
@@ -13,6 +14,8 @@ import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.task.domain.TaskStatus;
 import pl.loka.vehiclemanager.task_rating.application.port.TaskRatingUseCase;
 import pl.loka.vehiclemanager.task_rating.domain.TaskRating;
+import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase;
+import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -27,6 +30,9 @@ import static pl.loka.vehiclemanager.task.application.port.TaskUseCase.UpdateSta
 public class TaskController {
 
     private TaskUseCase taskService;
+    private NewTaskService newTaskService;
+
+    private WorkshopUseCase workshopService;
     private TaskRatingUseCase repairRatingService;
 
     @GetMapping
@@ -49,7 +55,7 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<?> addTask(@Valid @RequestBody RestTaskCommand command) {
-        Task newTask = taskService.addTask(command.toCreateCommand());
+        Task newTask = newTaskService.addTask(command.toCreateCommand());
         return ResponseEntity.created(Utils.createUri(newTask)).build();
     }
 

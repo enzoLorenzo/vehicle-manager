@@ -2,6 +2,8 @@ package pl.loka.vehiclemanager.task.application.port;
 
 import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.task.domain.TaskStatus;
+import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
+import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,7 +18,7 @@ public interface TaskUseCase {
 
     Task findTaskById(Long id);
 
-    Task addTask(CreateTaskCommand command);
+    Task addTask(Workshop workshop, Vehicle vehicle, CreateTaskCommand command);
 
     void updateTask(UpdateTaskCommand command);
 
