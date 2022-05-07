@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Workshop} from "../../models/workshop";
 import {WorkshopApiService} from "../../services/workshop-api.service";
 import {MatDialog} from "@angular/material/dialog";
+import {DialogAddWorkshopComponent} from "./dialog-add-workshop/dialog-add-workshop.component";
 //import {DialogAddWorkshopComponent} from "../workshops/dialog-add-workshop/dialog-add-workshop.component";
 
 @Component({
@@ -32,12 +33,12 @@ export class WorkshopsComponent implements OnInit {
     this.workshopApiService.delete(id)
       .subscribe(() => this.getWorkshops());
   }
-  /*
+
   addWorkshopDialog(): void {
     const dialogRef = this.dialog.open(DialogAddWorkshopComponent, {
       width: '250px',
     })
       .afterClosed()
       .subscribe(() => this.getWorkshops());
-  }*/
+  }
 }
