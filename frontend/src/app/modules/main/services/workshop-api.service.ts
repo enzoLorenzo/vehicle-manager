@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Workshop, WorkshopPost} from "../models/workshop";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +25,10 @@ export class WorkshopApiService {
 
   editClientWorkshop(workshop: Workshop ): Observable<Workshop> {
     return this.http.put<Workshop>(`/workshop/${workshop.id}`, workshop )
+  }
+
+  getClientSingleWorkshop(id: number): Observable<Workshop> {
+    return this.http.get<Workshop>(`/workshop/${id}`);
   }
 
 }
