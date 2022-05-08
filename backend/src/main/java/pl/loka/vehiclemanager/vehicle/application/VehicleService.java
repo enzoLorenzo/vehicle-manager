@@ -3,6 +3,7 @@ package pl.loka.vehiclemanager.vehicle.application;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.loka.vehiclemanager.security.application.UserSecurity;
+import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.domain.Client;
 import pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase;

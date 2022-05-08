@@ -34,7 +34,10 @@ public class Workshop extends BaseEntity {
     @JoinColumn(name = "dealer_id", nullable = false)
     private Dealer dealer;
 
-    @OneToMany(mappedBy = "workshop")
+    @OneToMany(
+            mappedBy = "workshop",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Task> tasks;
 
     public Workshop(CreateWorkshopCommand command, Dealer dealer) {

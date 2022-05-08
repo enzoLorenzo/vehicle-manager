@@ -9,6 +9,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {RepairsComponent} from "./pages/repairs/repairs.component";
 import { DialogEditVehicleComponent } from './pages/vehicles/dialog-edit-vehicle/dialog-edit-vehicle.component';
 import { WorkshopsComponent } from './pages/workshops/workshops.component';
+import { WorkshopCardComponent } from './pages/workshops/workshop-card/workshop-card.component';
+import { DialogAddWorkshopComponent } from './pages/workshops/dialog-add-workshop/dialog-add-workshop.component';
+import { DialogEditWorkshopComponent } from './pages/workshops/dialog-edit-workshop/dialog-edit-workshop.component';
 
 const COMPONENTS = [
   MainComponent,
@@ -18,7 +21,10 @@ const COMPONENTS = [
   RepairsComponent,
   DialogAddVehicleComponent,
   DialogEditVehicleComponent,
-  WorkshopsComponent
+  WorkshopsComponent,
+  WorkshopCardComponent,
+  DialogAddWorkshopComponent,
+  DialogEditWorkshopComponent
 ]
 
 

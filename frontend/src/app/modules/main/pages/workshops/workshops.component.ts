@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {Workshop} from "../../models/workshop";
+import {WorkshopApiService} from "../../services/workshop-api.service";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogAddWorkshopComponent} from "./dialog-add-workshop/dialog-add-workshop.component";
+//import {DialogAddWorkshopComponent} from "../workshops/dialog-add-workshop/dialog-add-workshop.component";
 
 @Component({
   selector: 'app-workshops',
@@ -7,9 +12,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkshopsComponent implements OnInit {
 
-  constructor() { }
+  workshops: Workshop[] = [];
 
-  ngOnInit(): void {
+  constructor(private workshopApiService: WorkshopApiService, public dialog: MatDialog) {
   }
 
+  ngOnInit(): void {
+    this.getWorkshops();
+  }
+
+  private getWorkshops() {
+    this.workshopApiService.getClientWorkshop()
+      .subscribe((workshops: Workshop[]) => {
+        this.workshops = workshops;
+      });
+
+  }
+
+  deleteWorkshop(id: number) {
+    this.workshopApiService.delete(id)
+      .subscribe(() => this.getWorkshops());
+  }
+
+  addWorkshopDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddWorkshopComponent, {
+      width: '250px',
+    })
+      .afterClosed()
+      .subscribe(() => this.getWorkshops());
+  }
 }

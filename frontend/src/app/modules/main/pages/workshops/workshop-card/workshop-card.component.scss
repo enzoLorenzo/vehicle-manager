@@ -1,0 +1,34 @@
+mat-card {
+  width: 900px;
+
+  .content{
+    text-align: center;
+    margin-left: 20px;
+
+  }
+
+  .photo{
+    background-color: #0074D9;
+  }
+
+  .labels{
+    text-align: end;
+  }
+
+  .info{
+    font-weight: bold;
+    padding-left: 30px;
+    text-align: left;
+  }
+
+  mat-card-content {
+    padding-top: 10px;
+
+  }
+
+  mat-card-actions{
+    text-align: end;
+
+  }
+
+}

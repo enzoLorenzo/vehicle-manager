@@ -15,8 +15,6 @@ import pl.loka.vehiclemanager.workshop.db.WorkshopJpaRepository;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
 
 import static pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase.*;
 import static pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.*;
@@ -59,7 +57,7 @@ public class LoadDatabase {
 
         Workshop workshop = addWorkshop(dealer, "LorenzoCars", "ul.Długa 34", "Zakład blacharski");
 
-        taskService.addTask(new TaskUseCase.CreateTaskCommand(
+        taskService.addTask(workshop, vehicle1, new TaskUseCase.CreateTaskCommand(
                 "opis",
                 LocalDateTime.of(2022, 4, 1, 12,40),
                 LocalDateTime.of(2022, 4, 1, 12,40),
@@ -67,7 +65,7 @@ public class LoadDatabase {
                 vehicle1.getId(),
                 workshop.getId()));
 
-        taskService.addTask(new TaskUseCase.CreateTaskCommand(
+        taskService.addTask(workshop, vehicle2, new TaskUseCase.CreateTaskCommand(
                 "druga naprawa",
                 LocalDateTime.of(2021, 4, 1, 12,20),
                 LocalDateTime.of(2022, 5, 1, 10,40),
