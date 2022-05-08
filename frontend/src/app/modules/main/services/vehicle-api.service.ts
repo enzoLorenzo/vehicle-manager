@@ -23,11 +23,11 @@ export class VehicleApiService {
   }
 
 
-  addClientVehicle(vehicle: VehiclePost): Observable<Vehicle> {
-    return this.http.post<Vehicle>('/vehicle', vehicle);
+  addClientVehicle(vehicle: VehiclePost): Observable<number> {
+    return this.http.post<number>('/vehicle', vehicle);
   }
 
-  editClientVehicle(vehicle: Vehicle ): Observable<Vehicle> {
-    return this.http.put<Vehicle>(`/vehicle/${vehicle.id}`, vehicle )
+  editClientVehicle(vehicle: Vehicle ) {
+    return this.http.put(`/vehicle/${vehicle.id}`, vehicle )
   }
 }

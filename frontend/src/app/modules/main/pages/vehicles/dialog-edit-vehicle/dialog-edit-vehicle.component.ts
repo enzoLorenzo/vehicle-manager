@@ -1,15 +1,18 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {Vehicle, VehicleType} from "../../../models/vehicle";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
+import {Vehicle, VehicleImage, VehicleType} from "../../../models/vehicle";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {VehicleApiService} from "../../../services/vehicle-api.service";
+import {FileService} from "../../../services/file.service";
+import {switchMap} from "rxjs/operators";
+import {Observable, tap} from "rxjs";
 
 @Component({
   selector: 'app-dialog-edit-vehicle',
   templateUrl: './dialog-edit-vehicle.component.html',
   styleUrls: ['./dialog-edit-vehicle.component.scss']
 })
-export class DialogEditVehicleComponent implements OnInit {
+export class DialogEditVehicleComponent {
 
   keys = Object.keys;
   VEHICLE_TYPE = VehicleType;
@@ -33,12 +36,21 @@ export class DialogEditVehicleComponent implements OnInit {
 
   });
 
+  selectedFiles?: FileList;
+
+  @ViewChild("inputImage")
+  inputImage!: ElementRef
+
+  image?: VehicleImage;
+
   constructor(
     public dialogRef: MatDialogRef<DialogEditVehicleComponent>,
     private vehicleApiService: VehicleApiService,
-    public fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: { vehicle: Vehicle }
+    @Inject(MAT_DIALOG_DATA) public data: { vehicle: Vehicle, image: VehicleImage },
+    private fileService: FileService
   ) {
+    this.image = this.data.image
+    console.log(this.data.image)
   }
 
   submit(): void {
@@ -57,11 +69,17 @@ export class DialogEditVehicleComponent implements OnInit {
 
     }
 
-    this.vehicleApiService.editClientVehicle(vehicle)
-      .subscribe({
-        next: (response) => console.log(response),
-        error: (error) => console.log(error),
-      });
+
+
+    this.vehicleApiService.editClientVehicle(vehicle).pipe(
+      switchMap(() => {
+        if (!!this.selectedFiles && this.selectedFiles.length > 0) {
+          return this.uploadImage(this.data.vehicle.id)
+        }
+        return new Observable();
+      }),
+      tap(() => this.dialogRef.close())
+    ).subscribe();
 
   }
 
@@ -69,7 +87,17 @@ export class DialogEditVehicleComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
+  selectFile(event: any) {
+    this.selectedFiles = event.target.files;
   }
 
+  cleanInput() {
+    this.inputImage.nativeElement.value = "";
+    this.selectedFiles = undefined;
+    this.image = undefined;
+  }
+
+  private uploadImage(id: number) {
+    return this.fileService.onUpload(id, this.selectedFiles!.item(0)!)
+  }
 }

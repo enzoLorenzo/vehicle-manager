@@ -3,7 +3,6 @@ package pl.loka.vehiclemanager.vehicle.application;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.loka.vehiclemanager.security.application.UserSecurity;
-import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.domain.Client;
 import pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase;
@@ -57,6 +56,22 @@ public class VehicleService implements VehicleUseCase {
     public void updateVehicle(UpdateVehicleCommand command) {
         Vehicle vehicle = findVehicleById(command.id());
         vehicle.update(command);
+        repository.save(vehicle);
+    }
+
+    @Override
+    @Transactional
+    public void updateImage(Long vehicleId, Long imageId) {
+        Vehicle vehicle = findVehicleById(vehicleId);
+        vehicle.updateImage(imageId);
+        repository.save(vehicle);
+    }
+
+    @Override
+    @Transactional
+    public void deleteImage(Long vehicleId) {
+        Vehicle vehicle = findVehicleById(vehicleId);
+        vehicle.deleteImage();
         repository.save(vehicle);
     }
 

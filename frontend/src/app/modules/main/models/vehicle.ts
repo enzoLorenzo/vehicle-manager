@@ -19,7 +19,8 @@ export interface Vehicle{
   engineCapacity: string;
   horsePower: string;
   type: VehicleType;
-  task: Repair[]
+  task: Repair[];
+  imageId?: number;
 }
 
 export interface VehiclePost{
@@ -31,4 +32,11 @@ export interface VehiclePost{
   engineCapacity: string;
   horsePower: string;
   type: VehicleType;
+}
+
+export interface VehicleImage{
+  vehicleId: number;
+  name: string;
+  type: string;
+  image: any;
 }

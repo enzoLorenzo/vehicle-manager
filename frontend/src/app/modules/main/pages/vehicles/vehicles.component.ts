@@ -36,7 +36,7 @@ export class VehiclesComponent implements OnInit {
 
   addVehicleDialog(): void {
     const dialogRef = this.dialog.open(DialogAddVehicleComponent, {
-      width: '250px',
+      width: '300px',
     })
       .afterClosed()
       .subscribe(() => this.getVehicles());
