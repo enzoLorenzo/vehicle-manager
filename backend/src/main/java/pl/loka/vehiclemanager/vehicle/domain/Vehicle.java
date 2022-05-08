@@ -9,6 +9,7 @@ import lombok.Setter;
 import pl.loka.vehiclemanager.common.BaseEntity;
 import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.user.domain.Client;
+import pl.loka.vehiclemanager.vehicle_image.domain.VehicleImage;
 
 import javax.persistence.*;
 
@@ -45,6 +46,9 @@ public class Vehicle extends BaseEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     private List<Task> tasks;
+
+
+    private Long imageId;
 
 
     public Vehicle(CreateVehicleCommand command, Client owner) {
@@ -84,5 +88,13 @@ public class Vehicle extends BaseEntity {
         if(command.type() != null){
             this.type = command.type();
         }
+    }
+
+    public void updateImage(Long imageId) {
+        this.imageId = imageId;
+    }
+
+    public void deleteImage() {
+        this.imageId = null;
     }
 }

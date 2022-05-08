@@ -1,9 +1,6 @@
 package pl.loka.vehiclemanager.vehicle_image.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import pl.loka.vehiclemanager.common.BaseEntity;
 
 import javax.persistence.Column;
@@ -19,10 +16,15 @@ import static pl.loka.vehiclemanager.vehicle_image.application.port.VehicleImage
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "vehicle_image")
 public class VehicleImage extends BaseEntity {
 
     private Long vehicleId;
+
+    private String name;
+
+    private String type;
 
     @Lob
     @Column(name = "image", length = Integer.MAX_VALUE)

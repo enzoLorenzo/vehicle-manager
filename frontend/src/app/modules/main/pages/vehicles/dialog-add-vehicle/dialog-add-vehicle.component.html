@@ -1,8 +1,6 @@
 <mat-card-content>
   <form [formGroup]="vehicleFG" (ngSubmit)="submit()">
 
-    {{vehicleFG.valid}}
-
     <mat-form-field>
       <input type="text" matInput placeholder="Brand" formControlName="brandFC">
     </mat-form-field>
@@ -52,6 +50,11 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field>
+      <input matInput disabled hidden>
+      <button *ngIf="this.selectedFiles" mat-icon-button color="primary" (click)="cleanInput()"><mat-icon>delete</mat-icon></button>
+      <input #inputImage (change)="selectFile($event)"  id="file" type="file" style="width: 150px">
+    </mat-form-field>
 
     <div class="button">
       <button type="submit" mat-button [disabled]="!vehicleFG.valid">Submit</button>

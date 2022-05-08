@@ -1,10 +1,12 @@
 <mat-card>
   <mat-card-title>
-  <h1>{{vehicle.brand}} {{vehicle.model}} {{vehicle.engineCapacity}}</h1>
+  <h1>{{_vehicle.brand}} {{_vehicle.model}} {{_vehicle.engineCapacity}}</h1>
   </mat-card-title>
   <mat-divider inset></mat-divider>
   <mat-card-content>
-    <div class="photo" fxFlex="30"></div>
+    <div  class="photo" fxFlex="30">
+      <img *ngIf="image" class="img" [src]="imageSrc" width="300" height="300">
+    </div>
 
     <div class="content" fxLayout="row" fxLayoutAlign="center center" fxFlex="70">
       <div class="labels">
@@ -18,14 +20,14 @@
         <p>HP: </p>
       </div>
       <div class="info">
-        <p>{{vehicle.brand}}</p>
-        <p>{{vehicle.model}}</p>
-        <p>{{vehicle.registration}}</p>
-        <p>{{vehicle.generation}}</p>
-        <p>{{vehicle.year}}</p>
-        <p>{{vehicle.type}}</p>
-        <p>{{vehicle.engineCapacity}}</p>
-        <p>{{vehicle.horsePower}}</p>
+        <p>{{_vehicle.brand}}</p>
+        <p>{{_vehicle.model}}</p>
+        <p>{{_vehicle.registration}}</p>
+        <p>{{_vehicle.generation}}</p>
+        <p>{{_vehicle.year}}</p>
+        <p>{{_vehicle.type}}</p>
+        <p>{{_vehicle.engineCapacity}}</p>
+        <p>{{_vehicle.horsePower}}</p>
       </div>
     </div>
 

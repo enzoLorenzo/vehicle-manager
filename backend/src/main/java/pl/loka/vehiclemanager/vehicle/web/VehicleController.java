@@ -3,9 +3,7 @@ package pl.loka.vehiclemanager.vehicle.web;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.loka.vehiclemanager.common.Utils;
 import pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase;
 import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
 import pl.loka.vehiclemanager.vehicle.domain.VehicleType;
@@ -37,9 +35,9 @@ public class VehicleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addVehicle(@Valid @RequestBody RestVehicleCommand command) {
+    public Long addVehicle(@Valid @RequestBody RestVehicleCommand command) {
         Vehicle newVehicle = vehicleService.addVehicle(command.toCreateCommand());
-        return ResponseEntity.created(Utils.createUri(newVehicle)).build();
+        return newVehicle.getId();
     }
 
     @PutMapping("/{id}")
