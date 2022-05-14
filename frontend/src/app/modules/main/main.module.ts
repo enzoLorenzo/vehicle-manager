@@ -12,6 +12,11 @@ import { WorkshopsComponent } from './pages/workshops/workshops.component';
 import { WorkshopCardComponent } from './pages/workshops/workshop-card/workshop-card.component';
 import { DialogAddWorkshopComponent } from './pages/workshops/dialog-add-workshop/dialog-add-workshop.component';
 import { DialogEditWorkshopComponent } from './pages/workshops/dialog-edit-workshop/dialog-edit-workshop.component';
+import { DialogAddRepairComponent } from './pages/repairs/dialog-add-repair/dialog-add-repair.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 const COMPONENTS = [
   MainComponent,
@@ -24,13 +29,14 @@ const COMPONENTS = [
   WorkshopsComponent,
   WorkshopCardComponent,
   DialogAddWorkshopComponent,
-  DialogEditWorkshopComponent
+  DialogEditWorkshopComponent,
+  DialogAddRepairComponent
 ]
 
 
 @NgModule({
   declarations: [COMPONENTS],
-  imports: [CoreModule, ReactiveFormsModule],
+  imports: [CoreModule, ReactiveFormsModule, MatDatepickerModule, BrowserAnimationsModule, MatNativeDateModule],
   exports: [COMPONENTS]
 })
 export class MainModule {

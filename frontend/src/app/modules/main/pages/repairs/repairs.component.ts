@@ -3,6 +3,9 @@ import {TaskApiService} from "../../services/task-api.service";
 import {Repair, TaskStatus} from "../../models/task";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSelectChange} from "@angular/material/select";
+import {DialogAddVehicleComponent} from "../vehicles/dialog-add-vehicle/dialog-add-vehicle.component";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogAddRepairComponent} from "./dialog-add-repair/dialog-add-repair.component";
 
 interface ColumnConfig {
   fieldName: string;
@@ -52,7 +55,7 @@ export class RepairsComponent implements OnInit {
   repairs: Repair[] = []
 
 
-  constructor(private taskApi: TaskApiService) {
+  constructor(private taskApi: TaskApiService,  public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -125,5 +128,13 @@ export class RepairsComponent implements OnInit {
     this.taskApi.deleteRepair(id).subscribe(()=>{
       this.getRepairList();
     })
+  }
+
+  addRepairDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddRepairComponent, {
+      width: '300px',
+    })
+      .afterClosed()
+      .subscribe(() => this.getRepairList());
   }
 }

@@ -14,6 +14,16 @@ export interface Task {
   workshop: Workshop;
 }
 
+export interface RepairPost {
+
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  taskStatus: TaskStatus;
+  // vehicle: Vehicle;
+  // workshop: Workshop;
+}
+
 export enum TaskStatus {
   PENDING = "PENDING",
   IN_PROGRESS = "IN_PROGRESS",
