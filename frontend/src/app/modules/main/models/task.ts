@@ -20,8 +20,8 @@ export interface RepairPost {
   startDate: Date;
   endDate: Date;
   taskStatus: TaskStatus;
-  // vehicle: Vehicle;
-  // workshop: Workshop;
+  vehicleId: number;
+  workshopId: number;
 }
 
 export enum TaskStatus {

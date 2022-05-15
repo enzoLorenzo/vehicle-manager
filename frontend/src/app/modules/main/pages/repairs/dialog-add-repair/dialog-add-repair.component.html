@@ -19,6 +19,20 @@
 
 
 
+    <mat-form-field>
+      <input type="text" matInput placeholder="Vehicle ID" formControlName="vehicleIdFC">
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-select formControlName="workshopFC" matInput placeholder="Workshop">
+        <mat-option *ngFor="let workshop of workshops" [value]="workshop">
+          {{workshop.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
     <div class="button">
       <button type="submit" mat-button [disabled]="!repairFG.valid">Submit</button>
     </div>
