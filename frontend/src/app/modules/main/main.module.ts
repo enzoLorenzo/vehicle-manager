@@ -16,6 +16,7 @@ import { DialogAddRepairComponent } from './pages/repairs/dialog-add-repair/dial
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogEditRepairComponent } from './pages/repairs/dialog-edit-repair/dialog-edit-repair.component';
 
 
 const COMPONENTS = [
@@ -30,7 +31,8 @@ const COMPONENTS = [
   WorkshopCardComponent,
   DialogAddWorkshopComponent,
   DialogEditWorkshopComponent,
-  DialogAddRepairComponent
+  DialogAddRepairComponent,
+  DialogEditRepairComponent
 ]
 
 

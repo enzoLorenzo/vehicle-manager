@@ -6,6 +6,7 @@ import {MatSelectChange} from "@angular/material/select";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogAddRepairComponent} from "./dialog-add-repair/dialog-add-repair.component";
 import {AuthService, UserType} from "../../../../core/services/auth/auth.service";
+import {DialogEditRepairComponent} from "./dialog-edit-repair/dialog-edit-repair.component";
 
 interface ColumnConfig {
   fieldName: string;
@@ -149,5 +150,16 @@ export class RepairsComponent implements OnInit {
 
     this.filters.push({label: "VEHICLE", fieldName: 'vehicle', options: reduceVehiclesNames, defaultValue: this.defaultValue})
     this.filters.push({label: "STATUS", fieldName: 'taskStatus', options: statusVehiclesNames, defaultValue: this.defaultValue})
+  }
+
+  editRepairDialog(repair: Repair): void {
+    const dialogRef = this.dialog.open(DialogEditRepairComponent, {
+      width: '300px',
+      data: {
+        repair: repair
+      }
+    })
+      .afterClosed()
+      .subscribe(() => this.getRepairList());
   }
 }

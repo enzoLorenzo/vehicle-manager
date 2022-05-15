@@ -26,4 +26,8 @@ export class TaskApiService {
     return this.http.post('/task', repair);
   }
 
+  editClientRepair(repair: Repair): Observable<Repair> {
+    return this.http.put<Repair>(`/task/${repair.id}`, repair);
+  }
+
 }
