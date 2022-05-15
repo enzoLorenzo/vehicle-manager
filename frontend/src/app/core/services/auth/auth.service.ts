@@ -129,6 +129,7 @@ export class AuthService {
     localStorage.removeItem(this.ACCESS_TOKEN);
     localStorage.removeItem(this.REFRESH_TOKEN);
     localStorage.removeItem(this.USER_ID);
+    localStorage.removeItem(this.USER_TYPE);
   }
 
 }
