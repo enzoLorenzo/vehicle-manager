@@ -86,10 +86,10 @@ export class DialogAddRepairComponent implements OnInit {
 
   submit(): void {
     this.getVehicle(this.repairFG.get("vehicleIdFC")!.value)
-    this.getWorkshop(1);
+    //this.getWorkshop(1);
     //const data = Date(this.repairFG.get("startDateFG")!.value)
     //const data = Date.parse(this.repairFG.get("startDateFG")!.value)
-    const data = new Date('2005-02-01')
+    //const data = new Date('2005-02-01')
     const newRepair: RepairPost = {
 
       description: this.repairFG.get("descriptionFC")!.value,
@@ -97,20 +97,22 @@ export class DialogAddRepairComponent implements OnInit {
       endDate: this.repairFG.get("endDateFC")!.value,
       taskStatus: TaskStatus.PENDING,
       vehicleId: this.repairFG.get("vehicleIdFC")!.value,
-      workshopId: 1
+      workshopId: this.repairFG.get("workshopFC")!.value.id
 
     }
     //this.getVehicles();
     //this.getVehicle(1);
 
 
-    console.log(this.repairFG.get('startDateFC')!.value);
-    console.log(this.repairFG.get('endDateFC')!.value);
-    // console.log(this.startDate);
-    // console.log(data);
-    console.log('outside' + this.vehicles.length);
-    console.log(this.vehicle.registration)
-    console.log(this.workshop.name)
+    // console.log(this.repairFG.get('startDateFC')!.value);
+    // console.log(this.repairFG.get('endDateFC')!.value);
+    // // console.log(this.startDate);
+    // // console.log(data);
+    // console.log('outside' + this.vehicles.length);
+    // console.log(this.vehicle.registration)
+    // console.log(this.workshop.name)
+
+
 
 
 

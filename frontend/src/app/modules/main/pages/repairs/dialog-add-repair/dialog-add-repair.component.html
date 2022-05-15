@@ -27,7 +27,7 @@
     <mat-form-field>
       <mat-select formControlName="workshopFC" matInput placeholder="Workshop">
         <mat-option *ngFor="let workshop of workshops" [value]="workshop">
-          {{workshop.name}}
+          {{workshop.id}}
         </mat-option>
       </mat-select>
     </mat-form-field>
