@@ -19,6 +19,7 @@ interface RepairDS {
   startDate: Date;
   endDate: Date;
   vehicle: string;
+  workshop: string;
   taskStatus: TaskStatus;
 }
 
@@ -42,6 +43,7 @@ export class RepairsComponent implements OnInit {
     {fieldName: 'id', header: "ID"},
     {fieldName: 'description', header: "DESCRIPTION"},
     {fieldName: 'vehicle', header: "VEHICLE"},
+    {fieldName: 'workshop', header: "WORKSHOP"},
     {fieldName: 'startDate', header: "START"},
     {fieldName: 'endDate', header: "END"},
     {fieldName: 'taskStatus', header: "STATUS"},
@@ -71,6 +73,24 @@ export class RepairsComponent implements OnInit {
   applyFilter(ob: MatSelectChange, filter: any) {
     this.filterDictionary.set(filter.fieldName, ob.value);
     this.dataSourceFilters.filter = JSON.stringify(Array.from(this.filterDictionary.entries()));
+  }
+
+  showDetails(id: number) {
+    const repair = this.repairs.find(value => value.id === id);
+  }
+
+  deleteRepair(id: number) {
+    this.taskApi.deleteRepair(id).subscribe(() => {
+      this.getRepairList();
+    })
+  }
+
+  addRepairDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddRepairComponent, {
+      width: '300px',
+    })
+      .afterClosed()
+      .subscribe(() => this.getRepairList());
   }
 
   private initFilterPredicate() {
@@ -103,6 +123,7 @@ export class RepairsComponent implements OnInit {
         startDate: repair.startDate,
         endDate: repair.endDate,
         vehicle: this.getVehicleName(repair),
+        workshop: this.getWorkshopName(repair),
         taskStatus: repair.taskStatus,
       } as RepairDS
     });
@@ -110,6 +131,10 @@ export class RepairsComponent implements OnInit {
 
   private getVehicleName(repair: Repair) {
     return repair.vehicle.brand + " " + repair.vehicle.model;
+  }
+
+  private getWorkshopName(repair: Repair) {
+    return repair.workshop.name;
   }
 
   private generateFilters() {
@@ -120,28 +145,11 @@ export class RepairsComponent implements OnInit {
       vehiclesNames.push(this.getVehicleName(repair));
       status.push(repair.taskStatus)
     });
+    const reduceVehiclesNames = Array.from(new Set(vehiclesNames));
+    const statusVehiclesNames = Array.from(new Set(status));
 
-    this.filters.push({label: "VEHICLE", fieldName: 'vehicle', options: vehiclesNames, defaultValue: this.defaultValue})
-    this.filters.push({label: "STATUS", fieldName: 'taskStatus', options: status, defaultValue: this.defaultValue })
-  }
-
-  showDetails(id: number) {
-    const repair = this.repairs.find(value => value.id === id);
-    console.log(repair)
-  }
-
-  deleteRepair(id: number) {
-    this.taskApi.deleteRepair(id).subscribe(()=>{
-      this.getRepairList();
-    })
-  }
-
-  addRepairDialog(): void {
-    const dialogRef = this.dialog.open(DialogAddRepairComponent, {
-      width: '300px',
-    })
-      .afterClosed()
-      .subscribe(() => this.getRepairList());
+    this.filters.push({label: "VEHICLE", fieldName: 'vehicle', options: reduceVehiclesNames, defaultValue: this.defaultValue})
+    this.filters.push({label: "STATUS", fieldName: 'taskStatus', options: statusVehiclesNames, defaultValue: this.defaultValue})
   }
 
   editRepairDialog(repair: Repair): void {

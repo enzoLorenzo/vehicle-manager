@@ -36,6 +36,7 @@ export class AuthService {
   private readonly ACCESS_TOKEN = 'ACCESS_TOKEN';
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   private readonly USER_ID = 'USER_ID';
+  private readonly USER_TYPE = 'USER_TYPE';
   private _isLoggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this._isLoggedIn$.asObservable();
   private userType: UserType = UserType.CLIENT;
@@ -98,7 +99,7 @@ export class AuthService {
   }
 
   getUserType(): UserType {
-    return this.userType;
+    return UserType[localStorage.getItem(this.USER_TYPE) as keyof typeof UserType];
   }
 
   private getUserTypeUrl(userType?: UserType) {
@@ -116,7 +117,7 @@ export class AuthService {
     this.storeTokens(tokensInfo.accessToken, tokensInfo.refreshToken);
     localStorage.setItem(this.USER_ID, tokensInfo.userId);
     const payloadObject: TokenPayload = JSON.parse(atob(tokensInfo.accessToken.split('.')[1]));
-    this.userType = payloadObject.userType;
+    localStorage.setItem(this.USER_TYPE, payloadObject.userType);
   }
 
   private storeTokens(accessToken: string, refreshToken: string) {
@@ -128,6 +129,7 @@ export class AuthService {
     localStorage.removeItem(this.ACCESS_TOKEN);
     localStorage.removeItem(this.REFRESH_TOKEN);
     localStorage.removeItem(this.USER_ID);
+    localStorage.removeItem(this.USER_TYPE);
   }
 
 }
