@@ -15,7 +15,6 @@ import pl.loka.vehiclemanager.task.domain.TaskStatus;
 import pl.loka.vehiclemanager.task_rating.application.port.TaskRatingUseCase;
 import pl.loka.vehiclemanager.task_rating.domain.TaskRating;
 import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase;
-import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -35,10 +34,16 @@ public class TaskController {
     private WorkshopUseCase workshopService;
     private TaskRatingUseCase repairRatingService;
 
-    @GetMapping
+    @GetMapping("/client")
     @ResponseStatus(HttpStatus.OK)
-    public List<Task> getTasks() {
-        return taskService.findTasks();
+    public List<Task> getClientTasks() {
+        return taskService.findClientTasks();
+    }
+
+    @GetMapping("/dealer")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Task> getDealerTasks() {
+        return taskService.findDealerTasks();
     }
 
     @GetMapping("/{id}")

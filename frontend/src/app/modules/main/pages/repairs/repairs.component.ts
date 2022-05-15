@@ -3,6 +3,9 @@ import {TaskApiService} from "../../services/task-api.service";
 import {Repair, TaskStatus} from "../../models/task";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSelectChange} from "@angular/material/select";
+import {MatDialog} from "@angular/material/dialog";
+import {DialogAddRepairComponent} from "./dialog-add-repair/dialog-add-repair.component";
+import {AuthService, UserType} from "../../../../core/services/auth/auth.service";
 
 interface ColumnConfig {
   fieldName: string;
@@ -15,6 +18,7 @@ interface RepairDS {
   startDate: Date;
   endDate: Date;
   vehicle: string;
+  workshop: string;
   taskStatus: TaskStatus;
 }
 
@@ -32,10 +36,13 @@ interface Filter {
 })
 export class RepairsComponent implements OnInit {
 
+  userType: UserType;
+
   displayedColumns: ColumnConfig[] = [
     {fieldName: 'id', header: "ID"},
     {fieldName: 'description', header: "DESCRIPTION"},
     {fieldName: 'vehicle', header: "VEHICLE"},
+    {fieldName: 'workshop', header: "WORKSHOP"},
     {fieldName: 'startDate', header: "START"},
     {fieldName: 'endDate', header: "END"},
     {fieldName: 'taskStatus', header: "STATUS"},
@@ -50,9 +57,12 @@ export class RepairsComponent implements OnInit {
   filters: Filter[] = [];
 
   repairs: Repair[] = []
+  USER_TYPE = UserType;
 
-
-  constructor(private taskApi: TaskApiService) {
+  constructor(private taskApi: TaskApiService,
+              public dialog: MatDialog,
+              private authService: AuthService) {
+    this.userType = authService.getUserType();
   }
 
   ngOnInit(): void {
@@ -62,6 +72,24 @@ export class RepairsComponent implements OnInit {
   applyFilter(ob: MatSelectChange, filter: any) {
     this.filterDictionary.set(filter.fieldName, ob.value);
     this.dataSourceFilters.filter = JSON.stringify(Array.from(this.filterDictionary.entries()));
+  }
+
+  showDetails(id: number) {
+    const repair = this.repairs.find(value => value.id === id);
+  }
+
+  deleteRepair(id: number) {
+    this.taskApi.deleteRepair(id).subscribe(() => {
+      this.getRepairList();
+    })
+  }
+
+  addRepairDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddRepairComponent, {
+      width: '300px',
+    })
+      .afterClosed()
+      .subscribe(() => this.getRepairList());
   }
 
   private initFilterPredicate() {
@@ -94,6 +122,7 @@ export class RepairsComponent implements OnInit {
         startDate: repair.startDate,
         endDate: repair.endDate,
         vehicle: this.getVehicleName(repair),
+        workshop: this.getWorkshopName(repair),
         taskStatus: repair.taskStatus,
       } as RepairDS
     });
@@ -101,6 +130,10 @@ export class RepairsComponent implements OnInit {
 
   private getVehicleName(repair: Repair) {
     return repair.vehicle.brand + " " + repair.vehicle.model;
+  }
+
+  private getWorkshopName(repair: Repair) {
+    return repair.workshop.name;
   }
 
   private generateFilters() {
@@ -111,19 +144,10 @@ export class RepairsComponent implements OnInit {
       vehiclesNames.push(this.getVehicleName(repair));
       status.push(repair.taskStatus)
     });
+    const reduceVehiclesNames = Array.from(new Set(vehiclesNames));
+    const statusVehiclesNames = Array.from(new Set(status));
 
-    this.filters.push({label: "VEHICLE", fieldName: 'vehicle', options: vehiclesNames, defaultValue: this.defaultValue})
-    this.filters.push({label: "STATUS", fieldName: 'taskStatus', options: status, defaultValue: this.defaultValue })
-  }
-
-  showDetails(id: number) {
-    const repair = this.repairs.find(value => value.id === id);
-    console.log(repair)
-  }
-
-  deleteRepair(id: number) {
-    this.taskApi.deleteRepair(id).subscribe(()=>{
-      this.getRepairList();
-    })
+    this.filters.push({label: "VEHICLE", fieldName: 'vehicle', options: reduceVehiclesNames, defaultValue: this.defaultValue})
+    this.filters.push({label: "STATUS", fieldName: 'taskStatus', options: statusVehiclesNames, defaultValue: this.defaultValue})
   }
 }

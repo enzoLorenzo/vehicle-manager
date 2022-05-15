@@ -11,7 +11,9 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
-
+  <mat-card-actions *ngIf="userType == USER_TYPE.DEALER">
+    <button mat-raised-button (click)="addRepairDialog()">NEW REPAIR</button>
+  </mat-card-actions>
   <table mat-table [dataSource]="dataSourceFilters" class="mat-elevation-z8">
     <ng-container [matColumnDef]="columnConfig.fieldName" *ngFor="let columnConfig of displayedColumns">
       <th mat-header-cell *matHeaderCellDef>{{ columnConfig.header }}</th>

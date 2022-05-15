@@ -17,7 +17,6 @@ const routes: Routes = [
       {path: '', redirectTo: 'vehicles', pathMatch: 'full'},
       {path: 'vehicles', component: VehiclesComponent},
       {path: 'repairs', component: RepairsComponent},
-
       {path: 'workshops', component: WorkshopsComponent}
     ],
     canActivate:[AuthGuard]

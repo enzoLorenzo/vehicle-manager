@@ -1,21 +1,29 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Repair} from "../models/task";
+import {Repair, RepairPost} from "../models/task";
+import {AuthService, UserType} from "../../../core/services/auth/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskApiService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private authService: AuthService) {
   }
 
   getRepairs(): Observable<Repair[]> {
-    return this.http.get<Repair[]>('/task');
+    const url = this.authService.getUserType() === UserType.CLIENT ? '/task/client' : '/task/dealer' ;
+    return this.http.get<Repair[]>(url);
   }
 
   deleteRepair(id: number){
     return this.http.delete(`/task/${id}`);
   }
+
+  addRepair(repair: RepairPost): Observable<Object> {
+    return this.http.post('/task', repair);
+  }
+
 }
