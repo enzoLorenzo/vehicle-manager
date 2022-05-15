@@ -1,0 +1,34 @@
+<mat-card-content>
+  <form [formGroup]="repairFG" (ngSubmit)="submit()">
+
+    <mat-form-field>
+      <input type="text" matInput placeholder="Description" formControlName="descriptionFC">
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter repair date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Start date" formControlName="startDateFC">
+        <input matEndDate placeholder="End date" formControlName="endDateFC">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker startView="year"></mat-date-range-picker>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-select formControlName="taskStatusFC" matInput placeholder="Task Status">
+        <mat-option *ngFor="let type of keys(TASK_STATUS)" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <div class="button">
+      <button type="submit" mat-button [disabled]="!repairFG.valid">Submit</button>
+    </div>
+  </form>
+</mat-card-content>
+
