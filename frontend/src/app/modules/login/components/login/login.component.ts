@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {AuthService} from "../../../../core/services/auth/auth.service";
+import {AuthService, UserType} from "../../../../core/services/auth/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,10 @@ export class LoginComponent {
       this.loginFG.get('passwordFC')?.value
     ).subscribe((loginResponse: boolean) => {
       if (loginResponse) {
-        this.router.navigate(['./main']);
+        const path = this.authService.getUserType() === UserType.CLIENT
+          ? "./main/vehicles"
+          : "./main/workshops";
+        this.router.navigate([path]);
         this.isError = false;
       } else {
         this.isError = true;

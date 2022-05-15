@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {BehaviorSubject, EMPTY, Observable, throwError} from 'rxjs';
-import {catchError, filter, switchMap, take} from "rxjs/operators";
+import {EMPTY, Observable, throwError} from 'rxjs';
+import {catchError, filter, switchMap} from "rxjs/operators";
 import {AuthService} from "../services/auth/auth.service";
 import {TokensInfo} from "../models/tokensInfo";
 
@@ -18,7 +18,13 @@ export class ErrorInterceptor implements HttpInterceptor {
         catchError((error: HttpErrorResponse) => {
           console.log(error)
           if (error.status === 401) {
-            return this.handle401Error(request, next);
+            if (this.authService.isRefreshing) {
+              this.authService.isRefreshing = false;
+              this.authService.logout();
+              return EMPTY;
+            }else{
+              return this.handle401Error(request, next);
+            }
           } else {
             return throwError(error);
           }
@@ -36,14 +42,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         switchMap((token: TokensInfo) => {
           this.authService.isRefreshing = false;
           this.authService.accessTokenSubject.next(token.accessToken);
-          return next.handle(this.getApiReq(request, token)).pipe(
-            catchError(() => {
-              this.authService.isRefreshing = false;
-              this.authService.logout();
-              throw EMPTY;
-            })
-          );
-        }),);
+          return next.handle(this.getApiReq(request, token));
+        }),
+        );
 
     } else {
       return this.authService.accessTokenSubject.pipe(

@@ -8,7 +8,7 @@ import pl.loka.vehiclemanager.task.db.TaskJpaRepository;
 import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.domain.Client;
-import pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase;
+import pl.loka.vehiclemanager.user.domain.Dealer;
 import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
@@ -22,19 +22,22 @@ public class TaskService implements TaskUseCase {
     private final TaskJpaRepository repository;
     private final UserSecurity userSecurity;
     private final UserUseCase clientService;
+    private final UserUseCase dealerService;
 
     public TaskService(
             TaskJpaRepository repository,
             UserSecurity userSecurity,
-            @Qualifier("clientService") UserUseCase clientService
+            @Qualifier("clientService") UserUseCase clientService,
+            @Qualifier("dealerService") UserUseCase dealerService
     ) {
         this.repository = repository;
         this.userSecurity = userSecurity;
         this.clientService = clientService;
+        this.dealerService = dealerService;
     }
 
     @Override
-    public List<Task> findTasks() {
+    public List<Task> findClientTasks() {
         String username = userSecurity.getLoginUsername();
         Client client = (Client) clientService.getByUsername(username);
         return client.getVehicles().stream()
@@ -44,18 +47,20 @@ public class TaskService implements TaskUseCase {
     }
 
     @Override
-    public List<Task> findTasksByVehicle(Long vehicleId) {
-        return repository.findAll()
-                .stream()
-                .filter(task -> task.getVehicle().getId().equals(vehicleId))
+    public List<Task> findDealerTasks() {
+        String username = userSecurity.getLoginUsername();
+        Dealer dealer = (Dealer) dealerService.getByUsername(username);
+        return dealer.getWorkshops().stream()
+                .map(Workshop::getTasks)
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Task> findTasksByWorkshop(Long workshopId) {
+    public List<Task> findTasksByVehicle(Long vehicleId) {
         return repository.findAll()
                 .stream()
-                .filter(task -> task.getWorkshop().getId().equals(workshopId))
+                .filter(task -> task.getVehicle().getId().equals(vehicleId))
                 .collect(Collectors.toList());
     }
 

@@ -55,12 +55,8 @@ export class DialogAddRepairComponent implements OnInit {
       workshopId: this.repairFG.get("workshopFC")!.value.id
     }
 
-    this.repairApiService.addClientRepair(newRepair).pipe(
-      switchMap(value => {
-        return new Observable();
-      }),
-      tap(() => this.dialogRef.close())
-    ).subscribe();
+    this.repairApiService.addRepair(newRepair)
+      .subscribe(() => this.dialogRef.close());
   }
 
   onNoClick(): void {
