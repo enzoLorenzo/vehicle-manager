@@ -6,6 +6,7 @@ import {MatSelectChange} from "@angular/material/select";
 import {DialogAddVehicleComponent} from "../vehicles/dialog-add-vehicle/dialog-add-vehicle.component";
 import {MatDialog} from "@angular/material/dialog";
 import {DialogAddRepairComponent} from "./dialog-add-repair/dialog-add-repair.component";
+import {AuthService, UserType} from "../../../../core/services/auth/auth.service";
 
 interface ColumnConfig {
   fieldName: string;
@@ -35,6 +36,8 @@ interface Filter {
 })
 export class RepairsComponent implements OnInit {
 
+  userType: UserType;
+
   displayedColumns: ColumnConfig[] = [
     {fieldName: 'id', header: "ID"},
     {fieldName: 'description', header: "DESCRIPTION"},
@@ -53,9 +56,12 @@ export class RepairsComponent implements OnInit {
   filters: Filter[] = [];
 
   repairs: Repair[] = []
+  USER_TYPE = UserType;
 
-
-  constructor(private taskApi: TaskApiService,  public dialog: MatDialog) {
+  constructor(private taskApi: TaskApiService,
+              public dialog: MatDialog,
+              private authService: AuthService) {
+    this.userType = authService.getUserType();
   }
 
   ngOnInit(): void {
