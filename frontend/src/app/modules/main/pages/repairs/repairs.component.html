@@ -23,7 +23,11 @@
           <button mat-icon-button color="primary" (click)="showDetails(repair.id)"><mat-icon>info</mat-icon></button>
           <button mat-icon-button color="primary" (click)="editRepairDialog(repair)" *ngIf="userType == USER_TYPE.DEALER"><mat-icon>edit</mat-icon></button>
           <button mat-icon-button color="primary" (click)="deleteRepair(repair.id)"><mat-icon>delete</mat-icon></button>
+
+          <button mat-raised-button (click)="rateRepairDialog(repair)">RATE</button>
+
         </div>
+
       </td>
     </ng-container>
 

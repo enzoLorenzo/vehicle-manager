@@ -17,6 +17,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogEditRepairComponent } from './pages/repairs/dialog-edit-repair/dialog-edit-repair.component';
+import { DialogRateRepairComponent } from './pages/repairs/dialog-rate-repair/dialog-rate-repair.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 
 const COMPONENTS = [
@@ -37,8 +39,8 @@ const COMPONENTS = [
 
 
 @NgModule({
-  declarations: [COMPONENTS],
-  imports: [CoreModule, ReactiveFormsModule, MatDatepickerModule, BrowserAnimationsModule, MatNativeDateModule],
+  declarations: [COMPONENTS, DialogRateRepairComponent],
+  imports: [CoreModule, ReactiveFormsModule, MatDatepickerModule, BrowserAnimationsModule, MatNativeDateModule, NgbModule],
   exports: [COMPONENTS]
 })
 export class MainModule {

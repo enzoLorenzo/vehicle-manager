@@ -7,6 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {DialogAddRepairComponent} from "./dialog-add-repair/dialog-add-repair.component";
 import {AuthService, UserType} from "../../../../core/services/auth/auth.service";
 import {DialogEditRepairComponent} from "./dialog-edit-repair/dialog-edit-repair.component";
+import {DialogRateRepairComponent} from "./dialog-rate-repair/dialog-rate-repair.component";
 
 interface ColumnConfig {
   fieldName: string;
@@ -155,6 +156,17 @@ export class RepairsComponent implements OnInit {
   editRepairDialog(repair: Repair): void {
     const dialogRef = this.dialog.open(DialogEditRepairComponent, {
       width: '300px',
+      data: {
+        repair: repair
+      }
+    })
+      .afterClosed()
+      .subscribe(() => this.getRepairList());
+  }
+
+  rateRepairDialog(repair: Repair): void {
+    const dialogRef = this.dialog.open(DialogRateRepairComponent, {
+      width: '500px',
       data: {
         repair: repair
       }
