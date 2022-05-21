@@ -166,7 +166,7 @@ export class RepairsComponent implements OnInit {
 
   rateRepairDialog(repair: Repair): void {
     const dialogRef = this.dialog.open(DialogRateRepairComponent, {
-      width: '500px',
+      width: '300px',
       data: {
         repair: repair
       }

@@ -7,6 +7,7 @@ import {RepairRatingApiService} from "../../../services/repair-rating-api.servic
 import {DialogEditRepairComponent} from "../dialog-edit-repair/dialog-edit-repair.component";
 import {switchMap} from "rxjs/operators";
 import {Observable, tap} from "rxjs";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-dialog-rate-repair',
@@ -15,6 +16,12 @@ import {Observable, tap} from "rxjs";
 })
 export class DialogRateRepairComponent implements OnInit {
   starRating = 0;
+
+  repairRatingFG: FormGroup = new FormGroup({
+    commentFC: new FormControl('', Validators.required)
+  });
+
+
   constructor( public dialogRef: MatDialogRef<DialogEditRepairComponent>,
                private repairRatingApiService: RepairRatingApiService,
               @Inject(MAT_DIALOG_DATA) public data: { repair: Repair }) { }
@@ -26,7 +33,7 @@ export class DialogRateRepairComponent implements OnInit {
 
     const newRepairRating: RepairRatingPost = {
       rating: this.starRating,
-      comment: "a",
+      comment: this.repairRatingFG.get("commentFC")!.value,
       taskId: this.data.repair.id
     }
     console.log(newRepairRating.rating);
