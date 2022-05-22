@@ -8,6 +8,7 @@ import {DialogAddRepairComponent} from "./dialog-add-repair/dialog-add-repair.co
 import {AuthService, UserType} from "../../../../core/services/auth/auth.service";
 import {DialogEditRepairComponent} from "./dialog-edit-repair/dialog-edit-repair.component";
 import {DialogRateRepairComponent} from "./dialog-rate-repair/dialog-rate-repair.component";
+import {RepairRating} from "../../models/repair_rating";
 
 interface ColumnConfig {
   fieldName: string;
@@ -21,6 +22,7 @@ interface RepairDS {
   endDate: Date;
   vehicle: string;
   workshop: string;
+  rating: RepairRating;
   taskStatus: TaskStatus;
 }
 
@@ -126,7 +128,7 @@ export class RepairsComponent implements OnInit {
         vehicle: this.getVehicleName(repair),
         workshop: this.getWorkshopName(repair),
         taskStatus: repair.taskStatus,
-        taskRating: repair.rating
+        rating: repair.rating,
       } as RepairDS
     });
   }
