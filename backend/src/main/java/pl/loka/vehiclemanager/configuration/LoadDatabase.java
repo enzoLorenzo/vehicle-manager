@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
 import pl.loka.vehiclemanager.task.domain.TaskStatus;
+import pl.loka.vehiclemanager.task_rating.application.port.TaskRatingUseCase;
 import pl.loka.vehiclemanager.user.application.port.UserUseCase;
 import pl.loka.vehiclemanager.user.domain.Client;
 import pl.loka.vehiclemanager.user.domain.Dealer;
@@ -27,6 +28,7 @@ public class LoadDatabase {
     private final VehicleJpaRepository vehicleJpaRepository;
     private final WorkshopJpaRepository workshopJpaRepository;
     private final TaskUseCase taskService;
+    private final TaskRatingUseCase repairRatingService;
 
 
 
@@ -35,12 +37,14 @@ public class LoadDatabase {
             @Qualifier("dealerService") UserUseCase dealerService,
             VehicleJpaRepository vehicleJpaRepository,
             WorkshopJpaRepository workshopJpaRepository,
-            TaskUseCase taskService) {
+            TaskUseCase taskService,
+            TaskRatingUseCase repairRatingService) {
         this.clientService = clientService;
         this.dealerService = dealerService;
         this.vehicleJpaRepository = vehicleJpaRepository;
         this.workshopJpaRepository = workshopJpaRepository;
         this.taskService = taskService;
+        this.repairRatingService = repairRatingService;
     }
 
     @Bean
@@ -72,6 +76,8 @@ public class LoadDatabase {
                 TaskStatus.IN_PROGRESS,
                 vehicle2.getId(),
                 workshop.getId()));
+
+        repairRatingService.addTaskRating(new TaskRatingUseCase.CreateTaskRatingCommand(1,"LorenzoCars to złodzieje", 2L));
     }
 
     private Vehicle addVehicle(Client client, String registration, String brand, String model, String generation, String year, String capacity, String hp, VehicleType type) {
