@@ -58,7 +58,7 @@ export class RepairsComponent implements OnInit {
 
   filters: Filter[] = [];
 
-  repairs: Repair[] = []
+  repairs: Repair[] = [];
   USER_TYPE = UserType;
 
   constructor(private taskApi: TaskApiService,
@@ -126,6 +126,7 @@ export class RepairsComponent implements OnInit {
         vehicle: this.getVehicleName(repair),
         workshop: this.getWorkshopName(repair),
         taskStatus: repair.taskStatus,
+        taskRating: repair.rating
       } as RepairDS
     });
   }

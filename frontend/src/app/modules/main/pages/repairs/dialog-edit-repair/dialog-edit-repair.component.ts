@@ -4,7 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FileService} from "../../../services/file.service";
 import {WorkshopApiService} from "../../../services/workshop-api.service";
 import {TaskApiService} from "../../../services/task-api.service";
-import {Repair, TaskStatus} from "../../../models/task";
+import {Repair, RepairPut, TaskStatus} from "../../../models/task";
 import {switchMap} from "rxjs/operators";
 import {Observable, tap} from "rxjs";
 
@@ -31,13 +31,13 @@ export class DialogEditRepairComponent implements OnInit {
     private fileService: FileService,
     private workshopApiService: WorkshopApiService,
     private repairApiService: TaskApiService,
-    @Inject(MAT_DIALOG_DATA) public data: { repair: Repair }
+    @Inject(MAT_DIALOG_DATA) public data: { repair: RepairPut }
   ) {
 
   }
 
   submit(): void {
-    const newRepair: Repair = {
+    const newRepair: RepairPut = {
       id: this.data.repair.id,
       description: this.repairFG.get("descriptionFC")!.value,
       startDate: this.repairFG.get("startDateFC")!.value,

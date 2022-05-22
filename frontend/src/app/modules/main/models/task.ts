@@ -1,10 +1,22 @@
 import {Vehicle} from "./vehicle";
 import {Workshop} from "./workshop";
+import {RepairRating} from "./repair_rating";
 
 export interface Repair extends Task {
 }
 
 export interface Task {
+  id: number;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  taskStatus: TaskStatus;
+  vehicle: Vehicle;
+  workshop: Workshop;
+  rating: RepairRating;
+}
+
+export interface RepairPut {
   id: number;
   description: string;
   startDate: Date;

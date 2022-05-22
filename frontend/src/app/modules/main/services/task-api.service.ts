@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {Repair, RepairPost} from "../models/task";
+import {Repair, RepairPost, RepairPut} from "../models/task";
 import {AuthService, UserType} from "../../../core/services/auth/auth.service";
 
 @Injectable({
@@ -26,8 +26,8 @@ export class TaskApiService {
     return this.http.post('/task', repair);
   }
 
-  editClientRepair(repair: Repair): Observable<Repair> {
-    return this.http.put<Repair>(`/task/${repair.id}`, repair);
+  editClientRepair(repair: RepairPut): Observable<RepairPut> {
+    return this.http.put<RepairPut>(`/task/${repair.id}`, repair);
   }
 
 }
