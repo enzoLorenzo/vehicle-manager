@@ -5,6 +5,7 @@ import {SharedModule} from "./shared/shared.module";
 import {CoreModule} from "./core/core.module";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {CentralModule} from "./modules/central.module";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {CentralModule} from "./modules/central.module";
   imports: [
     SharedModule,
     CoreModule,
-    CentralModule
+    CentralModule,
+    NgbModule
   ],
   providers: [
     {

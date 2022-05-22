@@ -1,0 +1,15 @@
+<form [formGroup]="repairRatingFG" (ngSubmit)="submit()">
+  <mat-form-field>
+    <input type="text" matInput placeholder="Comment" formControlName="commentFC">
+  </mat-form-field>
+
+  <br>
+
+  <ngb-rating [max]="5" [(rate)]="starRating" [readonly]="false"></ngb-rating>
+</form>
+
+
+
+<div class="button">
+  <button type="submit" mat-button (click)="submit()" [disabled]="!repairRatingFG.valid || starRating==0">Submit</button>
+</div>

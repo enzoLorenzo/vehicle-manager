@@ -1,5 +1,6 @@
 package pl.loka.vehiclemanager.task_rating.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class TaskRating extends BaseEntity {
     private String comment;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "task_id", referencedColumnName = "id")
     private Task task;
 

@@ -17,6 +17,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogEditRepairComponent } from './pages/repairs/dialog-edit-repair/dialog-edit-repair.component';
+import { DialogRateRepairComponent } from './pages/repairs/dialog-rate-repair/dialog-rate-repair.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { WorkshopRatingsComponent } from './pages/repairs/workshop-ratings/workshop-ratings.component';
 
 
 const COMPONENTS = [
@@ -32,13 +35,15 @@ const COMPONENTS = [
   DialogAddWorkshopComponent,
   DialogEditWorkshopComponent,
   DialogAddRepairComponent,
-  DialogEditRepairComponent
+  DialogEditRepairComponent,
+  DialogRateRepairComponent,
+  WorkshopRatingsComponent
 ]
 
 
 @NgModule({
   declarations: [COMPONENTS],
-  imports: [CoreModule, ReactiveFormsModule, MatDatepickerModule, BrowserAnimationsModule, MatNativeDateModule],
+  imports: [CoreModule, ReactiveFormsModule, MatDatepickerModule, BrowserAnimationsModule, MatNativeDateModule, NgbModule],
   exports: [COMPONENTS]
 })
 export class MainModule {
