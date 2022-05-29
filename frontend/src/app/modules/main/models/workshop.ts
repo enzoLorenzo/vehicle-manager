@@ -3,6 +3,7 @@ export interface Workshop {
   address: string;
   description: string;
   id: number;
+  priceList: PriceListPosition[]
 
   // providedServices: ProvidedServices TODO
 }
@@ -14,4 +15,10 @@ export interface WorkshopPost {
 
 
   // providedServices: ProvidedServices TODO
+}
+
+export interface PriceListPosition {
+  name: string;
+  description: string;
+  price: number;
 }

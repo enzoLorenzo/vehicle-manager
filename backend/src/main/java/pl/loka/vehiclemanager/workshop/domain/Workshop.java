@@ -26,7 +26,8 @@ public class Workshop extends BaseEntity {
     private String address;
     private String description;
 
-    @OneToMany(mappedBy = "workshop")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "workshop_id")
     private List<PriceListPosition> priceList;
 
     @ManyToOne

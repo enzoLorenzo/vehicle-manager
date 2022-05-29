@@ -19,7 +19,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogEditRepairComponent } from './pages/repairs/dialog-edit-repair/dialog-edit-repair.component';
 import { DialogRateRepairComponent } from './pages/repairs/dialog-rate-repair/dialog-rate-repair.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import { WorkshopRatingsComponent } from './pages/repairs/workshop-ratings/workshop-ratings.component';
+import { WorkshopRatingsComponent } from './pages/workshop-ratings/workshop-ratings.component';
+import { PriceListComponent } from './pages/price-list/price-list.component';
+import {CurrencyPipe} from "@angular/common";
 
 
 const COMPONENTS = [
@@ -37,7 +39,8 @@ const COMPONENTS = [
   DialogAddRepairComponent,
   DialogEditRepairComponent,
   DialogRateRepairComponent,
-  WorkshopRatingsComponent
+  WorkshopRatingsComponent,
+  PriceListComponent
 ]
 
 

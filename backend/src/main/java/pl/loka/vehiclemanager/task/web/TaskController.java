@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.loka.vehiclemanager.common.Utils;
+import pl.loka.vehiclemanager.pricelist.domain.PriceListPosition;
 import pl.loka.vehiclemanager.task.application.NewTaskService;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase.CreateTaskCommand;
@@ -98,12 +99,14 @@ public class TaskController {
         private Long vehicleId;
         private Long workshopId;
 
+        private List<PriceListPosition> positions;
+
         CreateTaskCommand toCreateCommand() {
-            return new CreateTaskCommand(description, startDate, endDate, taskStatus, vehicleId, workshopId);
+            return new CreateTaskCommand(description, startDate, endDate, taskStatus, vehicleId, workshopId, positions);
         }
 
         UpdateTaskCommand toUpdateCommand(Long id) {
-            return new UpdateTaskCommand(id, description, startDate, endDate, taskStatus, vehicleId, workshopId);
+            return new UpdateTaskCommand(id, description, startDate, endDate, taskStatus, vehicleId, workshopId, positions);
         }
     }
 }

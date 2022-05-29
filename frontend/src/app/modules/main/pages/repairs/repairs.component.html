@@ -20,11 +20,10 @@
       <td mat-cell *matCellDef="let repair">
         {{ repair[columnConfig.fieldName] }}
         <div *ngIf="columnConfig.fieldName === 'action'">
-          <button mat-icon-button color="primary" (click)="showDetails(repair.id)"><mat-icon>info</mat-icon></button>
+<!--          <button mat-icon-button color="primary" (click)="showDetails(repair.id)"><mat-icon>info</mat-icon></button>-->
           <button mat-icon-button color="primary" (click)="editRepairDialog(repair)" *ngIf="userType == USER_TYPE.DEALER"><mat-icon>edit</mat-icon></button>
           <button mat-icon-button color="primary" (click)="deleteRepair(repair.id)" *ngIf="userType == USER_TYPE.DEALER"><mat-icon>delete</mat-icon></button>
-
-          <button mat-raised-button (click)="rateRepairDialog(repair)" *ngIf="userType == USER_TYPE.CLIENT && repair.rating == null">RATE</button>
+          <button mat-raised-button (click)="rateRepairDialog(repair)" *ngIf="userType == USER_TYPE.CLIENT && repair.rating == '-'">RATE</button>
 
         </div>
 

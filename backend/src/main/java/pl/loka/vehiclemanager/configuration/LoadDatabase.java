@@ -16,6 +16,7 @@ import pl.loka.vehiclemanager.workshop.db.WorkshopJpaRepository;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 import static pl.loka.vehiclemanager.vehicle.application.port.VehicleUseCase.*;
 import static pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.*;
@@ -67,7 +68,7 @@ public class LoadDatabase {
                 LocalDateTime.of(2022, 4, 1, 12,40),
                 TaskStatus.PENDING,
                 vehicle1.getId(),
-                workshop.getId()));
+                workshop.getId(), Collections.emptyList()));
 
         taskService.addTask(workshop, vehicle2, new TaskUseCase.CreateTaskCommand(
                 "druga naprawa",
@@ -75,7 +76,7 @@ public class LoadDatabase {
                 LocalDateTime.of(2022, 5, 1, 10,40),
                 TaskStatus.IN_PROGRESS,
                 vehicle2.getId(),
-                workshop.getId()));
+                workshop.getId(), Collections.emptyList()));
 
         repairRatingService.addTaskRating(new TaskRatingUseCase.CreateTaskRatingCommand(1,"LorenzoCars to złodzieje", 2L));
     }

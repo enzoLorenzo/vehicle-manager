@@ -1,7 +1,6 @@
 package pl.loka.vehiclemanager.workshop.application.port;
 
-import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
-import pl.loka.vehiclemanager.task.domain.Task;
+import pl.loka.vehiclemanager.pricelist.domain.PriceListPosition;
 import pl.loka.vehiclemanager.workshop.domain.Workshop;
 
 import java.util.List;
@@ -9,6 +8,8 @@ import java.util.List;
 public interface WorkshopUseCase {
 
     List<Workshop> findWorkshops();
+
+    List<Workshop> findAllWorkshops();
 
     Workshop findWorkshopById(Long id);
 
@@ -18,12 +19,15 @@ public interface WorkshopUseCase {
 
     void deleteWorkshopById(Long id);
 
+    void updatePriceList(Long workshopId, List<PriceListPosition> priceList);
 
-    record CreateWorkshopCommand(String name, String address, String description){
+    record CreateWorkshopCommand(String name, String address, String description) {
     }
 
-    record UpdateWorkshopCommand(Long id, String name, String address, String description){
+    record UpdateWorkshopCommand(Long id, String name, String address, String description) {
     }
 
+    record PriceListPositionDTO(String name, String description, Double price) {
+    }
 
 }

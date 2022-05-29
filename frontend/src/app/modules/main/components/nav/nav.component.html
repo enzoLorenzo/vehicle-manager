@@ -7,14 +7,15 @@
     <mat-nav-list *ngIf="userType == USER_TYPE.CLIENT">
       <a mat-list-item [routerLink]="'vehicles'">Vehicles</a>
       <a mat-list-item [routerLink]="'repairs'">Repairs</a>
-      <a mat-list-item [routerLink]="'settings'">Settings</a>
+      <a mat-list-item [routerLink]="'price-list'">Price List</a>
+      <!--      <a mat-list-item [routerLink]="'settings'">Settings</a>-->
     </mat-nav-list>
 
     <mat-nav-list *ngIf="userType == USER_TYPE.DEALER">
       <a mat-list-item [routerLink]="'workshops'">Workshops</a>
       <a mat-list-item [routerLink]="'repairs'">Repairs</a>
       <a mat-list-item [routerLink]="'ratings'">Ratings</a>
-      <a mat-list-item [routerLink]="'settings'">Settings</a>
+      <a mat-list-item [routerLink]="'price-list'">Price List</a>
     </mat-nav-list>
   </mat-sidenav>
 
