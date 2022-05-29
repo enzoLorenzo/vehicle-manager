@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.loka.vehiclemanager.common.Utils;
-import pl.loka.vehiclemanager.pricelist.application.port.PriceListUseCase;
 import pl.loka.vehiclemanager.pricelist.domain.PriceListPosition;
 import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase;
 import pl.loka.vehiclemanager.workshop.application.port.WorkshopUseCase.CreateWorkshopCommand;
