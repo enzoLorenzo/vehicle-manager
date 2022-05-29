@@ -2,6 +2,8 @@ package pl.loka.vehiclemanager.task.application;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import pl.loka.vehiclemanager.pricelist.db.PriceListPositionJpaRepository;
+import pl.loka.vehiclemanager.pricelist.domain.PriceListPosition;
 import pl.loka.vehiclemanager.security.application.UserSecurity;
 import pl.loka.vehiclemanager.task.application.port.TaskUseCase;
 import pl.loka.vehiclemanager.task.db.TaskJpaRepository;
@@ -24,16 +26,20 @@ public class TaskService implements TaskUseCase {
     private final UserUseCase clientService;
     private final UserUseCase dealerService;
 
+    private final PriceListPositionJpaRepository priceListPositionJpaRepository;
+
+
     public TaskService(
             TaskJpaRepository repository,
             UserSecurity userSecurity,
             @Qualifier("clientService") UserUseCase clientService,
-            @Qualifier("dealerService") UserUseCase dealerService
-    ) {
+            @Qualifier("dealerService") UserUseCase dealerService,
+            PriceListPositionJpaRepository priceListPositionJpaRepository) {
         this.repository = repository;
         this.userSecurity = userSecurity;
         this.clientService = clientService;
         this.dealerService = dealerService;
+        this.priceListPositionJpaRepository = priceListPositionJpaRepository;
     }
 
     @Override
@@ -80,6 +86,9 @@ public class TaskService implements TaskUseCase {
     public void updateTask(UpdateTaskCommand command) {
         Task task = findTaskById(command.id());
         task.update(command);
+        List<PriceListPosition> oldPositions = task.getPositions();
+        priceListPositionJpaRepository.deleteAll(oldPositions);
+        task.setPositions(command.positions());
         repository.save(task);
     }
 

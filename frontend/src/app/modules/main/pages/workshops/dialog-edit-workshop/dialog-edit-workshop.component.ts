@@ -31,12 +31,11 @@ export class DialogEditWorkshopComponent implements OnInit {
 
   submit(): void {
 
-    const workshop: Workshop = {
+    const workshop = {
       id: this.data.workshop.id,
       name: this.workshopFG.get("nameFC")!.value,
       address: this.workshopFG.get("addressFC")!.value,
       description: this.workshopFG.get("descriptionFC")!.value
-
     }
 
     this.workshopApiService.editClientWorkshop(workshop)

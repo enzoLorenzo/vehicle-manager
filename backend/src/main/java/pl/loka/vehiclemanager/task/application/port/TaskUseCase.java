@@ -1,5 +1,6 @@
 package pl.loka.vehiclemanager.task.application.port;
 
+import pl.loka.vehiclemanager.pricelist.domain.PriceListPosition;
 import pl.loka.vehiclemanager.task.domain.Task;
 import pl.loka.vehiclemanager.task.domain.TaskStatus;
 import pl.loka.vehiclemanager.vehicle.domain.Vehicle;
@@ -27,12 +28,14 @@ public interface TaskUseCase {
     void deleteTask(Long id);
 
     record CreateTaskCommand(String description, LocalDateTime startDate,
-                             LocalDateTime endDate, TaskStatus taskStatus, Long vehicleId, Long workshopId) {
+                             LocalDateTime endDate, TaskStatus taskStatus, Long vehicleId, Long workshopId,
+                             List<PriceListPosition> positions) {
     }
 
 
     record UpdateTaskCommand(Long id, String description, LocalDateTime startDate,
-                             LocalDateTime endDate, TaskStatus taskStatus, Long vehicleId, Long workshopId) {
+                             LocalDateTime endDate, TaskStatus taskStatus, Long vehicleId, Long workshopId,
+                             List<PriceListPosition> positions) {
     }
 
     record UpdateStatusCommand(Long id, TaskStatus status) {

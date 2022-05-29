@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService, UserType} from "../../../../../core/services/auth/auth.service";
+import {AuthService, UserType} from "../../../../core/services/auth/auth.service";
 import {MatTableDataSource} from "@angular/material/table";
-import {Repair, TaskStatus} from "../../../models/task";
-import {TaskApiService} from "../../../services/task-api.service";
+import {Repair, TaskStatus} from "../../models/task";
+import {TaskApiService} from "../../services/task-api.service";
 import {MatDialog} from "@angular/material/dialog";
 import {MatSelectChange} from "@angular/material/select";
 

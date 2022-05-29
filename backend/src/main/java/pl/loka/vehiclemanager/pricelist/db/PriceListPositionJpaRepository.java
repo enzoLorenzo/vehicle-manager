@@ -6,5 +6,4 @@ import pl.loka.vehiclemanager.pricelist.domain.PriceListPosition;
 import java.util.List;
 
 public interface PriceListPositionJpaRepository extends JpaRepository <PriceListPosition, Long> {
-    List<PriceListPosition> findPriceListPositionByWorkshop_Id(Long workshopId);
 }

@@ -22,7 +22,7 @@ interface RepairDS {
   endDate: Date;
   vehicle: string;
   workshop: string;
-  rating: RepairRating;
+  rating: string;
   taskStatus: TaskStatus;
 }
 
@@ -50,6 +50,7 @@ export class RepairsComponent implements OnInit {
     {fieldName: 'startDate', header: "START"},
     {fieldName: 'endDate', header: "END"},
     {fieldName: 'taskStatus', header: "STATUS"},
+    {fieldName: 'rating', header: "RATING"},
     {fieldName: 'action', header: "ACTION"}
   ];
 
@@ -67,6 +68,7 @@ export class RepairsComponent implements OnInit {
               public dialog: MatDialog,
               private authService: AuthService) {
     this.userType = authService.getUserType();
+    console.log(this.userType)
   }
 
   ngOnInit(): void {
@@ -128,7 +130,7 @@ export class RepairsComponent implements OnInit {
         vehicle: this.getVehicleName(repair),
         workshop: this.getWorkshopName(repair),
         taskStatus: repair.taskStatus,
-        rating: repair.rating,
+        rating: !!repair.rating ? (repair.rating.rating + '/5') : '-',
       } as RepairDS
     });
   }
@@ -151,9 +153,10 @@ export class RepairsComponent implements OnInit {
     });
     const reduceVehiclesNames = Array.from(new Set(vehiclesNames));
     const statusVehiclesNames = Array.from(new Set(status));
-
-    this.filters.push({label: "VEHICLE", fieldName: 'vehicle', options: reduceVehiclesNames, defaultValue: this.defaultValue})
-    this.filters.push({label: "STATUS", fieldName: 'taskStatus', options: statusVehiclesNames, defaultValue: this.defaultValue})
+    this.filters = [
+      {label: "VEHICLE", fieldName: 'vehicle', options: reduceVehiclesNames, defaultValue: this.defaultValue},
+      {label: "STATUS", fieldName: 'taskStatus', options: statusVehiclesNames, defaultValue: this.defaultValue}
+    ]
   }
 
   editRepairDialog(repair: Repair): void {

@@ -1,0 +1,77 @@
+<mat-card>
+  <mat-card-title>
+    Price List
+  </mat-card-title>
+
+  <mat-card-content fxLayout="column" fxLayoutAlign="space-between center">
+
+    <form class="price_list" [formGroup]="priceListFG" (ngSubmit)="savePriceList()">
+
+      <mat-card-actions fxLayout="row" fxLayoutAlign="center center">
+
+        <mat-form-field>
+          <mat-select
+            (selectionChange)="showPriceList($event)"
+            matInput
+            placeholder="Workshop">
+            <mat-option *ngFor="let workshop of workshops" [value]="workshop">
+              {{workshop.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button
+          type="submit"
+          mat-button
+          [disabled]="!priceListFG.valid || selectedWorkshop === undefined"
+          *ngIf="userType === USER_TYPE.DEALER">
+          SAVE
+        </button>
+
+      </mat-card-actions>
+
+      <ng-container formArrayName="priceList">
+        <ng-container *ngFor="let positionForm of priceListFA.controls; let i = index">
+          <form [formGroup]="positionForm">
+
+            <mat-form-field class="item" appearance="fill">
+              <input matInput
+                     formControlName="name"
+                     placeholder="Name">
+            </mat-form-field>
+
+            <mat-form-field class="item" appearance="fill">
+              <textarea matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"
+                        formControlName="description"
+                        placeholder="Description"></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="item" appearance="fill">
+              <input matInput
+                     formControlName="price"
+                     placeholder="Price">
+            </mat-form-field>
+
+            <button
+              mat-icon-button
+              color="primary"
+              *ngIf="userType === USER_TYPE.DEALER"
+              (click)="deletePosition(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </form>
+        </ng-container>
+      </ng-container>
+    </form>
+
+    <button *ngIf="!!selectedWorkshop && userType === USER_TYPE.DEALER " mat-mini-fab (click)="addPosition()">
+      <mat-icon class="add-course-btn">add</mat-icon>
+    </button>
+
+  </mat-card-content>
+
+</mat-card>

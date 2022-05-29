@@ -16,6 +16,10 @@ export class WorkshopApiService {
     return this.http.get<Workshop[]>('/workshop');
   }
 
+  getAllWorkshop(): Observable<Workshop[]> {
+    return this.http.get<Workshop[]>('/workshop/all');
+  }
+
   delete(id: number) {
     return this.http.delete(`/workshop/${id}`);
   }
@@ -24,7 +28,7 @@ export class WorkshopApiService {
     return this.http.post<Workshop>('/workshop', workshop);
   }
 
-  editClientWorkshop(workshop: Workshop ): Observable<Workshop> {
+  editClientWorkshop(workshop: any ): Observable<Workshop> {
     return this.http.put<Workshop>(`/workshop/${workshop.id}`, workshop )
   }
 

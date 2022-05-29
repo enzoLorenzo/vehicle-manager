@@ -3,8 +3,6 @@ import {RepairPost, TaskStatus} from "../../../models/task";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialogRef} from "@angular/material/dialog";
 import {FileService} from "../../../services/file.service";
-import {switchMap} from "rxjs/operators";
-import {Observable, tap} from "rxjs";
 import {Workshop} from "../../../models/workshop";
 import {WorkshopApiService} from "../../../services/workshop-api.service";
 import {TaskApiService} from "../../../services/task-api.service";
@@ -19,14 +17,6 @@ export class DialogAddRepairComponent implements OnInit {
   keys = Object.keys;
   startDate = new Date(2022, 5, 14);
   workshops: Workshop[] = [];
-
-  private getWorkshops() {
-    this.workshopApiService.getClientWorkshop()
-      .subscribe((workshops: Workshop[]) => {
-        this.workshops = workshops;
-      });
-  }
-
   repairFG: FormGroup = new FormGroup({
     descriptionFC: new FormControl('', Validators.required),
     workshopFC: new FormControl('', Validators.required),
@@ -65,6 +55,13 @@ export class DialogAddRepairComponent implements OnInit {
 
   ngOnInit(): void {
     this.getWorkshops();
+  }
+
+  private getWorkshops() {
+    this.workshopApiService.getClientWorkshop()
+      .subscribe((workshops: Workshop[]) => {
+        this.workshops = workshops;
+      });
   }
 
 }
