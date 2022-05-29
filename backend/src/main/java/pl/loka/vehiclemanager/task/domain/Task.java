@@ -31,7 +31,7 @@ public class Task extends BaseEntity {
     private TaskStatus taskStatus;
 
 
-    @OneToOne(mappedBy = "task")
+    @OneToOne(mappedBy = "task", orphanRemoval = true)
     private TaskRating rating;
 
     @ManyToOne
