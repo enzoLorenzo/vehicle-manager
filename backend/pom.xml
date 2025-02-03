@@ -15,7 +15,7 @@
     <description>vehicle-manager</description>
     <properties>
         <java.version>17</java.version>
-        <jwt.version>3.18.3</jwt.version>
+        <jwt.version>4.5.0</jwt.version>
     </properties>
     <dependencies>
         <dependency>
